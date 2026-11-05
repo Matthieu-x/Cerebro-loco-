@@ -1,0 +1,11 @@
+{
+  "game": "cerebro-loco",
+  "contentVersion": 1,
+  "minimumEngineVersion": 1,
+  "updatedAt": "2026-11-04",
+  "levelsFile": "levels-v1.json",
+  "changelog": [
+    "Versión inicial con 30 niveles de Cerebro Loco.",
+    "Contenido separado del motor para permitir actualizaciones sin reinstalar la APK."
+  ]
+}

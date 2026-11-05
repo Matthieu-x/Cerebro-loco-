@@ -1,0 +1,358 @@
+[
+  {
+    "q": "¿Cuánto es 7 + 8 × 2?",
+    "hint": "Recuerda el orden de las operaciones.",
+    "type": "choice",
+    "opts": [
+      "30",
+      "23",
+      "22",
+      "46"
+    ],
+    "answer": 1,
+    "explain": "Primero 8 × 2 = 16. Después 7 + 16 = 23."
+  },
+  {
+    "q": "¿Qué pesa más: un kilo de hierro o uno de algodón?",
+    "hint": "La palabra importante es “un kilo”.",
+    "type": "choice",
+    "opts": [
+      "El hierro",
+      "El algodón",
+      "Pesan lo mismo",
+      "Depende del tamaño"
+    ],
+    "answer": 2,
+    "explain": "¡Un kilo siempre pesa un kilo!"
+  },
+  {
+    "q": "Encuentra el número que sigue",
+    "hint": "Cada salto aumenta de dos en dos: +3, +5, +7…",
+    "type": "choice",
+    "display": "2 · 5 · 10 · 17 · ?",
+    "opts": [
+      "24",
+      "25",
+      "26",
+      "27"
+    ],
+    "answer": 2,
+    "explain": "Se suman 3, 5, 7 y luego 9: 17 + 9 = 26."
+  },
+  {
+    "q": "¿Cuántos meses tienen 28 días?",
+    "hint": "No preguntamos cuáles tienen solamente 28.",
+    "type": "choice",
+    "opts": [
+      "1",
+      "2",
+      "6",
+      "12"
+    ],
+    "answer": 3,
+    "explain": "Todos los meses tienen al menos 28 días."
+  },
+  {
+    "q": "Enciende todas las luces",
+    "hint": "Cada toque cambia esa luz y sus vecinas de arriba, abajo, izquierda y derecha.",
+    "type": "lights"
+  },
+  {
+    "q": "¿Qué tiene ciudades, pero no casas; ríos, pero no agua?",
+    "hint": "Lo puedes abrir sobre una mesa para orientarte.",
+    "type": "choice",
+    "opts": [
+      "Un mapa",
+      "Un libro",
+      "Una fotografía",
+      "Un reloj"
+    ],
+    "answer": 0,
+    "explain": "Un mapa muestra ciudades y ríos, pero no son reales."
+  },
+  {
+    "q": "Toca los números en orden",
+    "hint": "Empieza por el 1. ¡No te distraigas!",
+    "type": "order"
+  },
+  {
+    "q": "¿Qué número falta?",
+    "hint": "Cada fila suma lo mismo.",
+    "type": "choice",
+    "display": "2 + 3 = 5　|　4 + 6 = 10　|　7 + 8 = ?",
+    "opts": [
+      "14",
+      "15",
+      "16",
+      "17"
+    ],
+    "answer": 1,
+    "explain": "7 + 8 = 15."
+  },
+  {
+    "q": "¿Cuál es diferente?",
+    "hint": "No te fijes solo en el color.",
+    "type": "choice",
+    "opts": [
+      "🍎",
+      "🍐",
+      "🍌",
+      "🚲"
+    ],
+    "answer": 3,
+    "explain": "Los tres primeros son frutas; la bicicleta no."
+  },
+  {
+    "q": "Memoriza y repite la secuencia",
+    "hint": "Observa los colores y luego repite el orden.",
+    "type": "sequence"
+  },
+  {
+    "q": "Si adelantas al segundo corredor, ¿en qué lugar quedas?",
+    "hint": "No adelantas al primero.",
+    "type": "choice",
+    "opts": [
+      "Primero",
+      "Segundo",
+      "Tercero",
+      "Cuarto"
+    ],
+    "answer": 1,
+    "explain": "Ocupas el lugar del segundo."
+  },
+  {
+    "q": "¿Cuántos triángulos ves?",
+    "hint": "Cuenta también los triángulos grandes que se forman al unir pequeños.",
+    "type": "choice",
+    "display": "△ dividido en 4 triángulos pequeños",
+    "opts": [
+      "4",
+      "5",
+      "6",
+      "8"
+    ],
+    "answer": 1,
+    "explain": "Hay cuatro pequeños y uno grande: cinco."
+  },
+  {
+    "q": "No toques el botón",
+    "hint": "La paciencia también es una habilidad. Espera unos segundos.",
+    "type": "wait"
+  },
+  {
+    "q": "La madre de Ana tiene cuatro hijas: Lala, Lele, Lili… ¿cómo se llama la cuarta?",
+    "hint": "Lee la primera frase otra vez.",
+    "type": "choice",
+    "opts": [
+      "Lulu",
+      "Lolo",
+      "Ana",
+      "Lyla"
+    ],
+    "answer": 2,
+    "explain": "La cuarta hija es Ana."
+  },
+  {
+    "q": "¿Qué número es mayor?",
+    "hint": "Compara los valores, no la cantidad de cifras.",
+    "type": "choice",
+    "opts": [
+      "0.8",
+      "0.75",
+      "0.65",
+      "0.7"
+    ],
+    "answer": 0,
+    "explain": "0.80 es mayor que 0.75."
+  },
+  {
+    "q": "Resuelve el patrón",
+    "hint": "Multiplica el número anterior por dos.",
+    "type": "choice",
+    "display": "3 · 6 · 12 · 24 · ?",
+    "opts": [
+      "36",
+      "42",
+      "48",
+      "54"
+    ],
+    "answer": 2,
+    "explain": "24 × 2 = 48."
+  },
+  {
+    "q": "¿Qué puedes romper sin tocarlo?",
+    "hint": "A veces basta con decir algo.",
+    "type": "choice",
+    "opts": [
+      "Un vaso",
+      "Una promesa",
+      "Una piedra",
+      "Una ventana"
+    ],
+    "answer": 1,
+    "explain": "Una promesa se puede romper sin tocar ningún objeto."
+  },
+  {
+    "q": "¿Cuántas patas hay en 3 arañas?",
+    "hint": "Cada araña tiene ocho patas.",
+    "type": "choice",
+    "opts": [
+      "18",
+      "21",
+      "24",
+      "30"
+    ],
+    "answer": 2,
+    "explain": "3 × 8 = 24."
+  },
+  {
+    "q": "Elige la palabra escrita correctamente",
+    "hint": "Fíjate en las letras del medio.",
+    "type": "choice",
+    "opts": [
+      "Exepción",
+      "Excepción",
+      "Ecepción",
+      "Exsepción"
+    ],
+    "answer": 1,
+    "explain": "La forma correcta es “excepción”."
+  },
+  {
+    "q": "Último desafío: ¿qué necesita una llama para seguir encendida?",
+    "hint": "No es un objeto que puedas guardar en una caja.",
+    "type": "choice",
+    "opts": [
+      "Hielo",
+      "Agua",
+      "Combustible y oxígeno",
+      "Oscuridad"
+    ],
+    "answer": 2,
+    "explain": "El fuego necesita combustible y oxígeno para mantenerse."
+  },
+  {
+    "q": "El padre de Luis tiene cinco hijos: Nana, Nene, Nini, Nono… ¿cómo se llama el quinto?",
+    "hint": "El nombre está escondido en la primera parte de la pregunta.",
+    "type": "choice",
+    "opts": [
+      "Nunu",
+      "Luis",
+      "Lolo",
+      "Luna"
+    ],
+    "answer": 1,
+    "explain": "El padre de Luis tiene cinco hijos y uno de ellos es Luis."
+  },
+  {
+    "q": "¿Qué número falta en el centro?",
+    "hint": "Multiplica los dos números de los extremos.",
+    "type": "choice",
+    "display": "3  →  12  ←  4",
+    "opts": [
+      "7",
+      "9",
+      "12",
+      "16"
+    ],
+    "answer": 2,
+    "explain": "3 × 4 = 12."
+  },
+  {
+    "q": "Tienes 10 velas encendidas. El viento apaga 3. ¿Cuántas quedan?",
+    "hint": "Las que no se apagaron siguen consumiéndose.",
+    "type": "choice",
+    "opts": [
+      "3",
+      "7",
+      "10",
+      "0"
+    ],
+    "answer": 0,
+    "explain": "Quedan 3 velas apagadas; las otras se consumen."
+  },
+  {
+    "q": "¿Cuál de estas figuras tiene más lados?",
+    "hint": "Cuenta los lados de cada figura.",
+    "type": "choice",
+    "opts": [
+      "Pentágono",
+      "Hexágono",
+      "Octágono",
+      "Cuadrado"
+    ],
+    "answer": 2,
+    "explain": "El octágono tiene ocho lados."
+  },
+  {
+    "q": "Si ayer fue domingo, ¿qué día será pasado mañana?",
+    "hint": "Primero descubre qué día es hoy.",
+    "type": "choice",
+    "opts": [
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves"
+    ],
+    "answer": 2,
+    "explain": "Si ayer fue domingo, hoy es lunes y pasado mañana será miércoles."
+  },
+  {
+    "q": "Completa la serie de letras",
+    "hint": "Avanza dos letras cada vez.",
+    "type": "choice",
+    "display": "A · C · E · G · ?",
+    "opts": [
+      "H",
+      "I",
+      "J",
+      "K"
+    ],
+    "answer": 1,
+    "explain": "La serie avanza saltando una letra: A, C, E, G, I."
+  },
+  {
+    "q": "¿Qué tiene un ojo y no puede ver?",
+    "hint": "Lo puedes encontrar en un costurero.",
+    "type": "choice",
+    "opts": [
+      "Una aguja",
+      "Un pez",
+      "Una cámara",
+      "Una tormenta"
+    ],
+    "answer": 0,
+    "explain": "El ojo de una aguja es el agujero por donde pasa el hilo."
+  },
+  {
+    "q": "Un tren eléctrico va hacia el norte. ¿Hacia dónde va el humo?",
+    "hint": "Lee con cuidado qué tipo de tren es.",
+    "type": "choice",
+    "opts": [
+      "Al norte",
+      "Al sur",
+      "Hacia atrás",
+      "No produce humo"
+    ],
+    "answer": 3,
+    "explain": "Es eléctrico, así que no produce humo."
+  },
+  {
+    "q": "Toca los números en orden",
+    "hint": "Encuentra y toca del 1 al 6 sin equivocarte.",
+    "type": "order"
+  },
+  {
+    "q": "Desafío maestro: ¿cuál es la mitad de dos más dos?",
+    "hint": "La frase puede interpretarse de dos maneras. Elige la operación habitual: la mitad de 2, más 2.",
+    "type": "choice",
+    "opts": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": 2,
+    "explain": "La mitad de 2 es 1; más 2 da 3."
+  }
+]
