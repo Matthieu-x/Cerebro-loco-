@@ -107,8 +107,10 @@ $('levelsBtn').onclick=()=>{renderMap();show('levels')};
 $('backHome').onclick=()=>show('home');$('backLevels').onclick=()=>{renderMap();show('levels')};
 $('hintBtn').onclick=()=>{if(finished)return;if(state.hints.includes(current)){$('hintline').textContent=levels[current].hint;return}if(state.coins<25){toast('No tienes focos suficientes');return}state.coins-=25;state.hints.push(current);save();updateCoins();$('hintline').textContent=levels[current].hint};
 $('skipBtn').onclick=()=>{if(finished)return;if(state.coins<75){toast('Necesitas 75 focos para saltar');return}state.coins-=75;state.unlocked=Math.max(state.unlocked,current+2);if(!state.done.includes(current))state.done.push(current);save();$('winReward').textContent='−75 focos';$('winText').textContent='Has usado tus focos para superar este reto. La siguiente misión ya está disponible.';$('winModal').classList.add('show');$('nextBtn').textContent=current<levels.length-1?'SIGUIENTE NIVEL　➜':'¡TERMINAR!';updateCoins()};
-$('nextBtn').onclick=()=>{$('winModal').classList.remove('show');if(current<levels.length-1)start(current+1);else{renderMap();show('levels')}};
-$('mapBtn').onclick=()=>{$('winModal').classList.remove('show');renderMap();show('levels')};
+let adCount=0;
+function adTick(){adCount++;if(adCount%3!==0)return;try{document.querySelectorAll('script[data-ad]').forEach(x=>x.remove());const a=document.createElement('script');a.dataset.zone='12200555';a.dataset.ad='1';a.src='https://n6wxm.com/vignette.min.js';(document.body||document.documentElement).appendChild(a)}catch(e){}}
+$('nextBtn').onclick=()=>{$('winModal').classList.remove('show');adTick();if(current<levels.length-1)start(current+1);else{renderMap();show('levels')}};
+$('mapBtn').onclick=()=>{$('winModal').classList.remove('show');adTick();renderMap();show('levels')};
 updateCoins();
 if(pendingContentManifest){
  $('updateVersion').textContent='Versión '+pendingContentManifest.contentVersion;
