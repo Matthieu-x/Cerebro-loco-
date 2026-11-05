@@ -1,6 +1,51 @@
-
 (async()=>{
 'use strict';
+
+// ==========================================
+// INTEGRACIÓN DE PLAYGAMA ADS
+// ==========================================
+window.pgAdsCallbacks = window.pgAdsCallbacks || [];
+window.pgAdsCallbacks.push(async () => {
+    await window.pgAds.init();
+    console.log("Playgama SDK listo");
+});
+
+async function mostrarInterstitial() {
+    try {
+        const banner = await window.pgAds.requestOutOfPageAd("interstitial");
+        if (banner.state === 'ready') {
+            banner.show();
+        } else {
+            banner.addEventListener('ready', () => banner.show());
+        }
+    } catch (e) {
+        console.log("Interstitial no disponible", e);
+    }
+}
+
+async function mostrarRecompensado() {
+    try {
+        const banner = await window.pgAds.requestOutOfPageAd("rewarded");
+        if (banner.state === 'ready') {
+            banner.show();
+        } else {
+            banner.addEventListener('ready', () => banner.show());
+        }
+        
+        // Este evento SOLO se dispara si el usuario ve el anuncio completo
+        banner.addEventListener('rewarded', () => {
+            state.coins += 25;
+            save();
+            updateCoins();
+            toast('¡+25 focos añadidos!');
+        });
+    } catch (e) { 
+        console.log("Rewarded no disponible", e); 
+        toast('No hay anuncios disponibles ahora.');
+    }
+}
+// ==========================================
+
 // Evita zoom por pellizco y desplazamiento de la página completa en móviles.
 document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
 document.addEventListener('gesturechange',e=>e.preventDefault(),{passive:false});
@@ -54,6 +99,8 @@ const KEY='cerebroLocoDeluxe_v1';
 let state={unlocked:1,coins:120,done:[],hints:[]};
 try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved)state={...state,...saved}}catch(e){}
 let current=0,finished=false,lightState=[],sequence=[],seqPos=0,seqReady=false,toastTimer;
+let adsCounter = 0; // Contador para los anuncios intersticiales
+
 const levels=await loadGameContent();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),1900)}
@@ -107,10 +154,35 @@ $('levelsBtn').onclick=()=>{renderMap();show('levels')};
 $('backHome').onclick=()=>show('home');$('backLevels').onclick=()=>{renderMap();show('levels')};
 $('hintBtn').onclick=()=>{if(finished)return;if(state.hints.includes(current)){$('hintline').textContent=levels[current].hint;return}if(state.coins<25){toast('No tienes focos suficientes');return}state.coins-=25;state.hints.push(current);save();updateCoins();$('hintline').textContent=levels[current].hint};
 $('skipBtn').onclick=()=>{if(finished)return;if(state.coins<75){toast('Necesitas 75 focos para saltar');return}state.coins-=75;state.unlocked=Math.max(state.unlocked,current+2);if(!state.done.includes(current))state.done.push(current);save();$('winReward').textContent='−75 focos';$('winText').textContent='Has usado tus focos para superar este reto. La siguiente misión ya está disponible.';$('winModal').classList.add('show');$('nextBtn').textContent=current<levels.length-1?'SIGUIENTE NIVEL　➜':'¡TERMINAR!';updateCoins()};
-let adCount=0;
-function adTick(){adCount++;if(adCount%3!==0)return;try{document.querySelectorAll('script[data-ad]').forEach(x=>x.remove());const a=document.createElement('script');a.dataset.zone='12200555';a.dataset.ad='1';a.src='https://n6wxm.com/vignette.min.js';(document.body||document.documentElement).appendChild(a)}catch(e){}}
-$('nextBtn').onclick=()=>{$('winModal').classList.remove('show');adTick();if(current<levels.length-1)start(current+1);else{renderMap();show('levels')}};
-$('mapBtn').onclick=()=>{$('winModal').classList.remove('show');adTick();renderMap();show('levels')};
+
+// BOTÓN DE SIGUIENTE NIVEL (CON ANUNCIO CADA 2 NIVELES)
+$('nextBtn').onclick = async () => {
+    $('winModal').classList.remove('show');
+    if(current < levels.length - 1) {
+        adsCounter++;
+        if(adsCounter % 2 === 0) {
+            await mostrarInterstitial();
+        }
+        start(current + 1);
+    } else {
+        renderMap();
+        show('levels');
+    }
+};
+
+// BOTÓN DE VER ANUNCIO PARA GANAR FOCOS
+$('rewardAdBtn').onclick = async () => {
+    const btn = $('rewardAdBtn');
+    btn.disabled = true;
+    btn.textContent = "CARGANDO...";
+    await mostrarRecompensado();
+    setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = "VER ANUNCIO · +25 FOCOS";
+    }, 2000);
+};
+
+$('mapBtn').onclick=()=>{$('winModal').classList.remove('show');renderMap();show('levels')};
 updateCoins();
 if(pendingContentManifest){
  $('updateVersion').textContent='Versión '+pendingContentManifest.contentVersion;
@@ -120,4 +192,3 @@ if(pendingContentManifest){
 $('applyContentUpdate').onclick=applyContentUpdate;
 $('laterContentUpdate').onclick=()=>$('contentUpdateModal').classList.remove('show');
 })();
-
