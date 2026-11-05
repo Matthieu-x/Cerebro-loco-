@@ -6,6 +6,8 @@
 <meta name="theme-color" content="#17152f">
 <title>Cerebro Loco — Desafíos mentales</title>
 <link rel="stylesheet" href="./game.css">
+<!-- SDK DE PLAYGAMA CON TU CLID -->
+<script src="https://playgama.com/ads/v0.3.js?clid=p_8cd46aa6-cc31-4149-bb34-5f754a653358"></script>
 </head>
 <body>
 <main class="app">
@@ -24,7 +26,12 @@
  <path d="M38 33l-8-13M142 34l9-13" stroke="#ffd166" stroke-width="6" stroke-linecap="round"/>
  <path d="M27 60l-12-4M153 60l12-4" stroke="#70c8ff" stroke-width="5" stroke-linecap="round"/>
 </svg></div><h1>CEREBRO<br><span>LOCO</span></h1><p class="subtitle">Pequeños retos, grandes dolores de cabeza. ¿Hasta dónde llega tu ingenio?</p></div>
-  <div class="menu-actions"><button class="primary" id="playBtn">JUGAR AHORA　➜</button><button class="secondary" id="levelsBtn">☷　VER NIVELES</button></div>
+  <div class="menu-actions">
+    <button class="primary" id="playBtn">JUGAR AHORA　➜</button>
+    <button class="secondary" id="levelsBtn">☷　VER NIVELES</button>
+    <!-- BOTÓN DE RECOMPENSA SIN EMOJIS -->
+    <button class="secondary" id="rewardAdBtn" style="background:linear-gradient(135deg,#5be0a0,#45c98c);color:#17152f;border:1px solid #ffffff50;font-weight:900;">VER ANUNCIO · +25 FOCOS</button>
+  </div>
   <div class="stats"><div class="stat"><span class="stat-symbol">★</span> Nivel <b id="homeProgress">1</b></div><div class="stat"><span class="stat-symbol">✦</span> <b id="homeStars">0</b> completados</div></div>
 </section>
 
