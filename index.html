@@ -1,60 +1,26 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
+<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#183a5b"><meta name="screen-orientation" content="landscape"><meta name="x5-orientation" content="landscape">
-<meta name="description" content="Cerebro Loco: acertijos visuales ilustrados e interactivos."><title>Cerebro Loco Remaster</title>
-
-<link rel="stylesheet" href="./game.css?v=8"><link rel="manifest" href="./app.webmanifest">
-<script src="https://playgama.com/ads/v0.3.js?clid=p_8cd46aa6-cc31-4149-bb34-5f754a653358"></script>
-
-</head>
-<body>
+<meta name="theme-color" content="#1a1245"><title>Cerebro Loco Remaster</title>
+<link rel="stylesheet" href="./game.css?v=9"><link rel="manifest" href="./app.webmanifest">
+<script src="https://playgama.com/ads/v0.3.js?clid=p_8cd46aa6-cc31-4149-bb34-5f754a653358"></script></head><body>
 <main class="app">
-<section class="screen active onboarding" id="onboarding-age">
- <div class="brandmark"><span class="brand-icon">✳</span><span>CEREBRO <b>LOCO</b></span></div>
- <div class="intro"><div class="eyebrow">ANTES DE COMENZAR</div><h1>¿Qué edad<br>tiene tu <em>mente?</em></h1><p>Personalizaremos tus desafíos según tu edad.</p></div>
- <div class="age-panel">
-  <div class="age-label">SELECCIONA TU EDAD</div>
-  <div class="age-wheel"><button class="age-arrow" id="ageDown" aria-label="Disminuir edad">−</button><div class="age-number"><strong id="ageValue">15</strong><span>AÑOS</span></div><button class="age-arrow" id="ageUp" aria-label="Aumentar edad">+</button></div>
-  <input id="ageSlider" type="range" min="5" max="99" value="15" aria-label="Edad">
-  <div class="range-labels"><span>5 años</span><span>99 años</span></div>
- </div>
- <button class="primary" id="nextToNameBtn">CONTINUAR <span>→</span></button>
- <p class="privacy-note">Tu aventura empieza aquí · No necesitas compartir más datos.</p>
-</section>
-<section class="screen onboarding" id="onboarding-name">
- <div class="brandmark"><span class="brand-icon">✳</span><span>CEREBRO <b>LOCO</b></span></div>
- <div class="intro"><div class="eyebrow">UN ÚLTIMO PASO</div><h1>¿Cómo te<br>llamamos, <em>genio?</em></h1><p>Milo está esperando para conocerte.</p></div>
- <div class="name-panel"><label for="inputName">TU NOMBRE</label><input type="text" id="inputName" maxlength="20" autocomplete="given-name" placeholder="Escribe tu nombre"></div>
- <button class="primary" id="saveProfileBtn">¡A JUGAR! <span>→</span></button>
- <button class="text-button" id="backToAge">← Cambiar edad</button>
-</section>
-<section class="screen" id="home">
- <div class="top"><div class="pill" id="userGreeting">HOLA</div><div class="pill coin-pill"><span class="coin-dot">✦</span><b id="coinsHome">0</b> FOCOS</div></div>
- <div class="home-hero"><div class="eyebrow">TU ENTRENAMIENTO MENTAL</div><h1>Piensa distinto.<br><em>Rompe las reglas.</em></h1><div class="mascot-stage"><canvas id="homeCanvas"></canvas><div class="speech">¡Ey! ¿Listo para poner a prueba esa mente?</div></div></div>
- <div class="menu-actions"><button class="primary" id="playBtn">JUGAR AHORA <span>→</span></button><button class="secondary" id="levelsBtn">EXPLORAR NIVELES</button><button class="secondary update-entry" id="updatesBtn">↻ ACTUALIZACIONES</button><button class="ad-button" id="rewardAdBtn">✦ Ver anuncio · +25 focos</button></div>
- <div class="stats"><div class="stat"><span>NIVEL ACTUAL</span><b id="homeProgress">1</b></div><div class="stat"><span>RETOS SUPERADOS</span><b id="homeStars">0</b></div></div>
-</section>
-<section class="screen" id="levels">
- <div class="top"><button class="iconbtn" id="backHome">←</button><div class="pill coin-pill"><span class="coin-dot">✦</span><b id="coinsLevels">0</b> FOCOS</div></div>
- <div class="eyebrow">TU PROGRESO</div><h2 class="heading">Mapa de desafíos</h2><div class="map-summary"><span id="mapCount">0 de 3 escenas completadas</span><span>3 ESCENAS</span></div><div class="progress"><i id="mapProgress"></i></div><div class="level-grid" id="levelGrid"></div>
-</section>
-<section class="screen" id="game">
- <div class="top game-top"><button class="iconbtn" id="backLevels">←</button><div class="pill" id="levelLabel">RETO 01</div><div class="pill coin-pill"><span class="coin-dot">✦</span><b id="coinsGame">0</b></div></div>
- <div class="canvas-container scene-stage"><canvas id="gameCanvas" aria-label="Escena interactiva del acertijo"></canvas><div class="scene-tip" id="sceneTip">Toca los objetos para investigar. Arrastra los que encuentres.</div></div>
- <div class="question" id="question">Cargando desafío…</div><div class="hintline" id="hintline"></div><div class="play-area" id="playArea"></div><div class="feedback" id="feedback" aria-live="polite"></div>
- <div class="hud"><button class="tool-btn" id="hintBtn"><span class="tool-icon">?</span><span class="tool-copy"><b>PISTA</b><small>Ayuda</small></span><strong>25</strong></button><button class="tool-btn" id="skipBtn"><span class="tool-icon">»</span><span class="tool-copy"><b>SALTAR</b><small>Continuar</small></span><strong>75</strong></button></div>
-</section>
-<section class="screen" id="updates">
- <div class="top"><button class="iconbtn" id="backUpdates">←</button><div class="pill">CENTRO DE ACTUALIZACIONES</div></div>
- <div class="update-layout"><div class="update-art"><div class="update-orbit">↻</div><span>VERSIÓN DEL JUEGO</span><strong id="installedVersion">v8</strong><small>Contenido y mejoras</small></div><div class="update-info"><div class="eyebrow">SIEMPRE AL DÍA</div><h2 class="heading">Actualizaciones</h2><p>Comprueba si hay nuevas escenas, mejoras o correcciones disponibles.</p><div class="update-status" id="updateStatus">Versión instalada. Pulsa comprobar para buscar novedades.</div><button class="primary" id="checkUpdatesBtn">COMPROBAR ACTUALIZACIONES <span>↻</span></button><button class="secondary" id="installUpdateBtn" hidden>DESCARGAR ACTUALIZACIÓN</button><div class="update-footnote">Las actualizaciones del motor se publican junto con los archivos nuevos del juego.</div></div></div>
-</section>
-</main>
-<div class="rotate-screen"><div class="rotate-icon">▱</div><strong>Gira tu dispositivo</strong><span>Cerebro Loco está diseñado para jugar en horizontal.</span></div>
-<div class="modal" id="winModal"><div class="modal-card"><div class="win-kicker">DESAFÍO SUPERADO</div><div class="trophy">★</div><h2>¡Mente brillante!</h2><div class="win-reward"><b id="winReward">+10 focos</b></div><p id="winText">Has superado el desafío.</p><div class="modal-actions"><button class="primary" id="nextBtn">SIGUIENTE RETO <span>→</span></button><button class="secondary" id="mapBtn">VOLVER AL MAPA</button></div></div></div>
-<div class="modal update-modal" id="contentUpdateModal"><div class="modal-card update-card"><div class="update-symbol">✦</div><div class="update-kicker">NUEVO CONTENIDO</div><h2>Tu juego acaba de crecer</h2><p id="updateVersion"></p><ul id="updateChangelog"></ul><div class="modal-actions"><button class="primary" id="applyContentUpdate">ACTUALIZAR AHORA <span>→</span></button><button class="text-button" id="laterContentUpdate">LO HARÉ DESPUÉS</button></div></div></div>
-<div class="toast" id="toast"></div>
-<script src="./game.js?v=8" defer></script>
-</body></html>
+<section class="screen active" id="onboarding-age"><div class="panel"><div class="logo">🧠 Cerebro <b>Loco</b></div><h1>¿Qué edad tiene tu mente?</h1>
+<div class="age"><button class="rb" id="ageDown">−</button><div><strong id="ageValue">15</strong><small>AÑOS</small></div><button class="rb" id="ageUp">+</button></div>
+<input id="ageSlider" type="range" min="5" max="99" value="15"><button class="btn" id="nextToNameBtn">Continuar →</button></div></section>
+<section class="screen" id="onboarding-name"><div class="panel"><div class="logo">🧠 Cerebro <b>Loco</b></div><h1>¿Cómo te llamamos, genio?</h1>
+<input type="text" id="inputName" maxlength="20" placeholder="Tu nombre"><button class="btn" id="saveProfileBtn">¡A jugar! →</button><button class="link" id="backToAge">← Cambiar edad</button></div></section>
+<section class="screen" id="home"><div class="homebox"><div class="homeleft"><div class="top"><span class="chip" id="userGreeting">HOLA</span><span class="chip">💡 <b id="coinsHome">0</b></span></div>
+<div class="logo big">🧠 Cerebro <b>Loco</b></div><p class="sub">Encuentra objetos, resuelve códigos y escapa de cada habitación.</p>
+<button class="btn" id="playBtn">▶ Jugar</button><button class="btn alt" id="levelsBtn">Misiones</button><button class="btn ghost" id="rewardAdBtn">🎁 Ver anuncio · +25 focos</button></div>
+<div class="homeart"></div></div></section>
+<section class="screen" id="levels"><div class="top"><button class="rb" id="backHome">←</button><span class="chip">💡 <b id="coinsLevels">0</b></span></div>
+<h2>Misiones</h2><p class="sub" id="mapCount"></p><div class="level-grid" id="levelGrid"></div></section>
+<section class="screen" id="game"><div class="stage" id="stage"><img id="bg" alt="" draggable="false">
+<i class="cn" id="coinNum">50</i><div id="hots"></div><button class="hb" id="pauseBtn" aria-label="Pausa"></button><button class="hb" id="hintBtn" aria-label="Pista"></button>
+<button class="hb" id="giftBtn" aria-label="Regalo"></button><button class="hb" id="focosBtn" aria-label="Focos"></button>
+<div class="say" id="say"></div><div class="card" id="card"></div></div></section></main>
+<div class="rotate"><b>Gira tu dispositivo</b><span>Se juega en horizontal.</span></div>
+<div class="modal" id="winModal"><div class="mcard"><div class="trophy">★</div><h2>¡Mente brillante!</h2><b id="winReward">+10 focos</b><p id="winText"></p>
+<button class="btn" id="nextBtn">Siguiente →</button><button class="btn alt" id="mapBtn">Misiones</button></div></div>
+<div class="modal" id="pauseModal"><div class="mcard"><h2>Pausa</h2><button class="btn" id="resumeBtn">Continuar</button><button class="btn alt" id="retryBtn">Reiniciar misión</button><button class="btn ghost" id="exitBtn">Salir al mapa</button></div></div>
+<div class="toast" id="toast"></div><script src="./game.js?v=9" defer></script></body></html>
