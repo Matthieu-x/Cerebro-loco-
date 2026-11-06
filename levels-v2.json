@@ -15,7 +15,10 @@
     "scene": "scene2",
     "target": "lock",
     "action": "drag",
-    "targetPoint": [0.92, 0.48],
+    "targetPoint": [
+      0.742,
+      0.48
+    ],
     "explain": "Abriste el cofre. Encontraste la llave y la llevaste al lugar correcto."
   },
   {
@@ -25,7 +28,10 @@
     "scene": "scene3",
     "target": "door-lock",
     "action": "drag",
-    "targetPoint": [0.92, 0.47],
+    "targetPoint": [
+      0.744,
+      0.47
+    ],
     "explain": "¡Puerta abierta! Resolviste el acertijo usando los objetos de la ilustración."
   }
 ]

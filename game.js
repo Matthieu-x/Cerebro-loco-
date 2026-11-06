@@ -2,15 +2,15 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const canvas=$('gameCanvas'),ctx=canvas.getContext('2d'),homeCanvas=$('homeCanvas'),hctx=homeCanvas.getContext('2d');
-const ENGINE_VERSION=5, APP_VERSION='7.0', CONTENT_KEY='cerebroLoco_content_v3', CONTENT_VERSION_KEY='cerebroLoco_contentVersion_v3', SAVE_KEY='cerebroLocoSave_v2';
+const ENGINE_VERSION=6, APP_VERSION='8.0', CONTENT_KEY='cerebroLoco_content_v3', CONTENT_VERSION_KEY='cerebroLoco_contentVersion_v3', SAVE_KEY='cerebroLocoSave_v2';
 let levels=[],current=0,finished=false,frame=0,mascotMood='idle',toastTimer=null,pendingManifest=null,sceneSolved=false,dragging=false,dragPos=null,adsCounter=0;
 let state={unlocked:1,coins:120,done:[],hints:[],name:'',age:0};
 try{state={...state,...JSON.parse(localStorage.getItem(SAVE_KEY)||'{}')}}catch(e){}
 const sceneImages={};
 const scenes={
- scene1:{target:[.69,.66],itemStart:[.69,.66],draw:(c,W,H)=>drawIllustratedScene(c,W,H,'scene-01.webp','phone')},
- scene2:{target:[.84,.49],itemStart:[.48,.59],draw:(c,W,H)=>drawIllustratedScene(c,W,H,'scene-02.webp','key')},
- scene3:{target:[.87,.47],itemStart:[.58,.72],draw:(c,W,H)=>drawIllustratedScene(c,W,H,'scene-03.webp','key')}
+ scene1:{target:[.605,.66],itemStart:[.605,.66],draw:(c,W,H)=>drawIllustratedScene(c,W,H,'scene-01.webp','phone')},
+ scene2:{target:[.696,.49],itemStart:[.488,.59],draw:(c,W,H)=>drawIllustratedScene(c,W,H,'scene-02.webp','key')},
+ scene3:{target:[.715,.47],itemStart:[.546,.72],draw:(c,W,H)=>drawIllustratedScene(c,W,H,'scene-03.webp','key')}
 };
 function fit(c,x){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);if(c.width!==Math.round(r.width*d)||c.height!==Math.round(r.height*d)){c.width=Math.round(r.width*d);c.height=Math.round(r.height*d)}x.setTransform(d,0,0,d,0,0);return[r.width,r.height]}
 function rr(c,x,y,w,h,r,fill,stroke){c.beginPath();c.roundRect(x,y,w,h,r);if(fill){c.fillStyle=fill;c.fill()}if(stroke){c.strokeStyle=stroke;c.lineWidth=2;c.stroke()}}
@@ -111,7 +111,7 @@ function sceneImageRect(W,H,file){
 }
 function scenePoint(norm,W,H,file){const r=sceneImageRect(W,H,file);return{x:r.x+norm[0]*r.w,y:r.y+norm[1]*r.h}}
 function drawIllustratedScene(c,W,H,file,item){
- if(!sceneImages[file]){sceneImages[file]=new Image();sceneImages[file].decoding='async';sceneImages[file].src='./'+file+'?v=7'}
+ if(!sceneImages[file]){sceneImages[file]=new Image();sceneImages[file].decoding='async';sceneImages[file].src='./'+file+'?v=8'}
  const im=sceneImages[file];c.fillStyle='#233a43';c.fillRect(0,0,W,H);
  if(im.complete&&im.naturalWidth){
   const cover=Math.max(W/im.width,H/im.height),bw=im.width*cover,bh=im.height*cover;
@@ -139,7 +139,7 @@ function drawIllustratedScene(c,W,H,file,item){
 async function preloadSceneImages(){
  const files=['scene-01.webp','scene-02.webp','scene-03.webp'];
  await Promise.allSettled(files.map(file=>new Promise(resolve=>{
-  const im=new Image();im.decoding='async';im.onload=()=>{sceneImages[file]=im;resolve()};im.onerror=resolve;im.src='./'+file+'?v=7';
+  const im=new Image();im.decoding='async';im.onload=()=>{sceneImages[file]=im;resolve()};im.onerror=resolve;im.src='./'+file+'?v=8';
   if(im.complete&&im.naturalWidth){sceneImages[file]=im;resolve()}
  })));
 }
