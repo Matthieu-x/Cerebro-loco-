@@ -3,69 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#17152f">
+<meta name="theme-color" content="#0a0f1c">
 <title>Cerebro Loco — Desafíos mentales</title>
 <link rel="stylesheet" href="./game.css">
-<!-- SDK DE PLAYGAMA CON TU CLID -->
 <script src="https://playgama.com/ads/v0.3.js?clid=p_8cd46aa6-cc31-4149-bb34-5f754a653358"></script>
 </head>
 <body>
+
 <main class="app">
-<section class="screen active" id="home">
-  <div class="top"><div class="pill">🧠 RETO MENTAL</div><div class="pill"><svg class="coin-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a10 10 0 0 0-6 18v3h12v-3a10 10 0 0 0-6-18Z" fill="#ffd166" stroke="#805b22" stroke-width="2"/><path d="M12 26h8m-7 3h6" stroke="#e5b64d" stroke-width="3" stroke-linecap="round"/></svg><b id="coinsHome">120</b></div></div>
-  <div class="brand"><div class="mascot-wrap" aria-label="Milo, la mascota de Cerebro Loco">
-<svg class="mascot" viewBox="0 0 180 180" role="img" aria-label="Milo, personaje cerebro">
- <defs><linearGradient id="brainGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffb4d0"/><stop offset="1" stop-color="#e66fa8"/></linearGradient><linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
- <path d="M90 20c-17-17-43-5-43 16-23 2-34 28-20 45-15 23-1 48 21 49 8 25 34 30 49 13 18 17 45 8 48-15 23-7 29-33 15-49 13-22-1-44-23-45-7-22-32-29-47-14Z" fill="url(#brainGrad)" stroke="#713d72" stroke-width="7" stroke-linejoin="round"/>
- <path d="M89 24v112M54 47q20 5 24 24M125 47q-20 5-24 24M45 91q20-2 31 14M133 91q-20-2-31 14" fill="none" stroke="#c95791" stroke-width="5" stroke-linecap="round"/>
- <ellipse cx="65" cy="83" rx="13" ry="17" fill="#fff"/><ellipse cx="115" cy="83" rx="13" ry="17" fill="#fff"/>
- <circle cx="69" cy="87" r="7" fill="#34264d"/><circle cx="111" cy="87" r="7" fill="#34264d"/>
- <circle cx="71" cy="84" r="2.5" fill="#fff"/><circle cx="113" cy="84" r="2.5" fill="#fff"/>
- <path d="M77 111q13 13 26 0" fill="none" stroke="#713d72" stroke-width="5" stroke-linecap="round"/>
- <circle cx="45" cy="105" r="8" fill="#ff8eae" opacity=".65"/><circle cx="135" cy="105" r="8" fill="#ff8eae" opacity=".65"/>
- <path d="M38 33l-8-13M142 34l9-13" stroke="#ffd166" stroke-width="6" stroke-linecap="round"/>
- <path d="M27 60l-12-4M153 60l12-4" stroke="#70c8ff" stroke-width="5" stroke-linecap="round"/>
-</svg></div><h1>CEREBRO<br><span>LOCO</span></h1><p class="subtitle">Pequeños retos, grandes dolores de cabeza. ¿Hasta dónde llega tu ingenio?</p></div>
-  <div class="menu-actions">
-    <button class="primary" id="playBtn">JUGAR AHORA　➜</button>
-    <button class="secondary" id="levelsBtn">☷　VER NIVELES</button>
-    <!-- BOTÓN DE RECOMPENSA SIN EMOJIS -->
-    <button class="secondary" id="rewardAdBtn" style="background:linear-gradient(135deg,#5be0a0,#45c98c);color:#17152f;border:1px solid #ffffff50;font-weight:900;">VER ANUNCIO · +25 FOCOS</button>
+<!-- REGISTRO -->
+<section class="screen active" id="onboarding">
+  <div class="brand">
+    <h1 class="title-elegant">CEREBRO<br><span>LOCO</span></h1>
+    <p class="subtitle">Ingresa tus datos para comenzar la misión.</p>
   </div>
-  <div class="stats"><div class="stat"><span class="stat-symbol">★</span> Nivel <b id="homeProgress">1</b></div><div class="stat"><span class="stat-symbol">✦</span> <b id="homeStars">0</b> completados</div></div>
+  <div class="register-box">
+    <label>¿Cuál es tu edad?</label>
+    <input type="number" id="inputAge" placeholder="Ej. 15" min="5" max="99" required>
+    <label>¿Cómo te llamas?</label>
+    <input type="text" id="inputName" placeholder="Tu nombre" required>
+    <button class="primary" id="saveProfileBtn" style="margin-top:15px;">COMENZAR ➜</button>
+  </div>
 </section>
 
+<!-- MENÚ -->
+<section class="screen" id="home">
+  <div class="top"><div class="pill" id="userGreeting">HOLA</div><div class="pill"><b id="coinsHome">0</b> FOCOS</div></div>
+  <div class="brand" style="flex: 0.4;">
+    <h1 class="title-elegant">CEREBRO<br><span>LOCO</span></h1>
+  </div>
+  <div class="menu-actions">
+    <button class="primary" id="playBtn">JUGAR AHORA</button>
+    <button class="secondary" id="levelsBtn">VER NIVELES</button>
+    <button class="secondary" id="rewardAdBtn" style="background:#1e2c4f;color:#a0b8e0;border:1px solid #3b5998;">VER ANUNCIO · +25 FOCOS</button>
+  </div>
+  <div class="stats"><div class="stat">Nivel <b id="homeProgress">1</b></div><div class="stat"><b id="homeStars">0</b> completados</div></div>
+</section>
+
+<!-- MAPA -->
 <section class="screen" id="levels">
-  <div class="top"><button class="iconbtn" id="backHome">←</button><div class="pill"><svg class="coin-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a10 10 0 0 0-6 18v3h12v-3a10 10 0 0 0-6-18Z" fill="#ffd166" stroke="#805b22" stroke-width="2"/><path d="M12 26h8m-7 3h6" stroke="#e5b64d" stroke-width="3" stroke-linecap="round"/></svg><b id="coinsLevels">120</b></div></div>
-  <h2 class="heading">Mapa de desafíos</h2><p class="subheading">Completa un nivel para desbloquear el siguiente.</p>
+  <div class="top"><button class="iconbtn" id="backHome">←</button><div class="pill"><b id="coinsLevels">0</b> FOCOS</div></div>
+  <h2 class="heading">Mapa de desafíos</h2>
   <div class="progress"><i id="mapProgress"></i></div><div class="level-grid" id="levelGrid"></div>
 </section>
 
+<!-- JUEGO -->
 <section class="screen" id="game">
-  <div class="top game-top"><button class="iconbtn" id="backLevels">←</button><div class="pill" id="levelLabel">NIVEL 1</div><div class="pill"><svg class="coin-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a10 10 0 0 0-6 18v3h12v-3a10 10 0 0 0-6-18Z" fill="#ffd166" stroke="#805b22" stroke-width="2"/><path d="M12 26h8m-7 3h6" stroke="#e5b64d" stroke-width="3" stroke-linecap="round"/></svg><b id="coinsGame">120</b></div></div>
-  <div class="question" id="question"></div><div class="hintline" id="hintline"></div><div class="scene-tag" id="sceneTag"><span class="scene-orb"></span><span>LABORATORIO DE IDEAS</span><span class="scene-line"></span></div>
-  <div class="companion-scene" id="companionScene"><div class="scene-art" id="sceneArt"></div><div class="companion-copy"><b id="miloMood">MILO TE ACOMPAÑA</b><span id="miloLine">¡Vamos a resolverlo!</span></div></div>
-  <div class="play-area" id="playArea"></div><div class="feedback" id="feedback"></div>
+  <div class="top game-top"><button class="iconbtn" id="backLevels">←</button><div class="pill" id="levelLabel">NIVEL 1</div><div class="pill"><b id="coinsGame">0</b> FOCOS</div></div>
+  
+  <!-- AQUÍ VA EL CANVAS DEL JUEGO -->
+  <div class="canvas-container">
+    <canvas id="gameCanvas"></canvas>
+  </div>
+
+  <div class="question" id="question">Cargando...</div>
+  <div class="hintline" id="hintline"></div>
+  
+  <!-- RESPUESTAS DE TEXTO (solo para preguntas de opción múltiple) -->
+  <div class="play-area" id="playArea"></div>
+  
+  <div class="feedback" id="feedback"></div>
   <div class="hud">
-   <button class="tool-btn hint-tool" id="hintBtn"><span class="tool-icon"><svg viewBox="0 0 40 40"><circle cx="17" cy="17" r="10" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="m25 25 9 9" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M17 11v7m0 4v1" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="tool-copy"><b>PISTA</b><small>Revela una ayuda</small></span><strong class="tool-cost">25</strong></button>
-   <button class="tool-btn skip-tool" id="skipBtn"><span class="tool-icon"><svg viewBox="0 0 40 40"><path d="M7 9v22l15-11L7 9Zm15 0v22l15-11L22 9Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/></svg></span><span class="tool-copy"><b>SALTAR RETO</b><small>Pasar al siguiente nivel</small></span><strong class="tool-cost">75</strong></button>
+   <button class="tool-btn hint-tool" id="hintBtn"><span class="tool-icon"><svg viewBox="0 0 40 40"><circle cx="17" cy="17" r="10" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="m25 25 9 9" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span><span class="tool-copy"><b>PISTA</b></span><strong class="tool-cost">25</strong></button>
+   <button class="tool-btn skip-tool" id="skipBtn"><span class="tool-icon"><svg viewBox="0 0 40 40"><path d="M7 9v22l15-11L7 9Zm15 0v22l15-11L22 9Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/></svg></span><span class="tool-copy"><b>SALTAR</b></span><strong class="tool-cost">75</strong></button>
  </div>
 </section>
 </main>
-<div class="modal" id="winModal"><div class="modal-card"><div class="win-kicker">MISIÓN COMPLETADA</div><div class="trophy">🏆</div><h2>¡Lo lograste!</h2><div class="win-reward">✦ <b id="winReward">+10 focos</b></div><p id="winText">Has superado el desafío.</p><div class="modal-actions"><button class="primary" id="nextBtn">SIGUIENTE NIVEL　➜</button><button class="secondary" id="mapBtn">VOLVER AL MAPA</button></div></div></div>
+
+<div class="modal" id="winModal"><div class="modal-card"><div class="win-kicker">MISIÓN COMPLETADA</div><div class="trophy">🏆</div><h2>¡Lo lograste!</h2><div class="win-reward"><b id="winReward">+10 focos</b></div><p id="winText">Has superado el desafío.</p><div class="modal-actions"><button class="primary" id="nextBtn">SIGUIENTE NIVEL ➜</button><button class="secondary" id="mapBtn">VOLVER AL MAPA</button></div></div></div>
 <div class="toast" id="toast"></div>
 
-<div class="update-modal" id="contentUpdateModal" role="dialog" aria-modal="true" aria-labelledby="updateTitle">
+<div class="update-modal" id="contentUpdateModal">
  <div class="update-card">
-  <div class="update-kicker">CEREBRO LOCO · ACTUALIZACIÓN</div>
-  <h2 id="updateTitle">¡Hay contenido nuevo!</h2>
-  <p id="updateVersion">Nueva versión disponible</p>
-  <ul id="updateChangelog"><li>Nuevos retos y mejoras.</li></ul>
+  <div class="update-kicker">ACTUALIZACIÓN</div>
+  <h2>¡Hay contenido nuevo!</h2>
+  <p id="updateVersion"></p>
+  <ul id="updateChangelog"></ul>
   <div class="update-actions">
-   <button class="update-primary" id="applyContentUpdate">ACTUALIZAR CONTENIDO</button>
+   <button class="update-primary" id="applyContentUpdate">ACTUALIZAR</button>
    <button class="update-later" id="laterContentUpdate">MÁS TARDE</button>
   </div>
-  <p class="update-message" id="updateMessage" aria-live="polite"></p>
  </div>
 </div>
 <script src="./game.js" defer></script>
