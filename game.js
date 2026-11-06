@@ -28,7 +28,7 @@ let cur=0,done=false,flags={},sayT,toastT;
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200)}
 function say(m){const s=$('say');s.textContent=m;s.classList.add('on');clearTimeout(sayT);sayT=setTimeout(()=>s.classList.remove('on'),2600)}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));if(['home','levels','game'].includes(id)){state.screen=id;save()}}
-function coins(){['coinsHome','coinsLevels'].forEach(i=>$(i).textContent=state.coins);$('coinNum').textContent=state.coins}
+function coins(){$('coinsLevels').textContent=state.coins;const xf=$('xpFill');if(xf)xf.style.width=state.done.length/L.length*100+'%';$('coinNum').textContent=state.coins}
 const css=r=>`left:${r[0]}%;top:${r[1]}%;width:${r[2]}%;height:${r[3]}%`;
 function card(h){const c=$('card');c.innerHTML=h;c.classList.add('on');c.onclick=e=>{if(e.target===c)c.classList.remove('on')}}
 function start(i){cur=i;state.cur=i;state.fl=null;done=false;flags={};const l=L[i];show('game');$('bg').src=l.img;$('card').classList.remove('on');$('say').classList.remove('on');
@@ -43,19 +43,25 @@ function tap(o){if(done)return;setTimeout(()=>{state.fl={c:cur,f:flags};save()},
  if(k==='cal'){flags.cal=1;return card('<div class="grid3">'+[1,2,3,4,5,6,7,8,9].map(n=>'<b>'+n+'</b>').join('')+'</div><small>Toca para cerrar</small>')}
  if(k==='lock')return keypad()}
 function reveal(svg,p,w){const e=document.createElement('div');e.className='item';e.style.cssText=`left:${p[0]}%;top:${p[1]}%;width:${w}%`;e.innerHTML=svg;$('hots').appendChild(e);return e}
-function drag(e){const st=$('stage');e.onpointerdown=ev=>{e.setPointerCapture(ev.pointerId);e.style.animation='none';e.onpointermove=m=>{const r=st.getBoundingClientRect();e.style.left=(m.clientX-r.left)/r.width*100+'%';e.style.top=(m.clientY-r.top)/r.height*100+'%'};
- e.onpointerup=u=>{e.onpointermove=e.onpointerup=null;const r=st.getBoundingClientRect(),x=(u.clientX-r.left)/r.width*100,y=(u.clientY-r.top)/r.height*100,t=L[cur].lock;
- if(Math.hypot(x-t[0],(y-t[1])*.5625)<7){e.style.left=t[0]+'%';e.style.top=t[1]+'%';finish()}else{say('Ahí no. ¿Dónde va una llave?');e.style.animation=''}}}}
+function drag(e){const st=$('stage');let on=0,lx=0,ly=0;
+ const mv=ev=>{const r=st.getBoundingClientRect();lx=(ev.clientX-r.left)/r.width*100;ly=(ev.clientY-r.top)/r.height*100;e.style.left=lx+'%';e.style.top=ly+'%'};
+ e.addEventListener('pointerdown',ev=>{ev.preventDefault();ev.stopPropagation();on=1;e.style.animation='none';mv(ev)});
+ window.addEventListener('pointermove',ev=>{if(on&&e.isConnected){ev.preventDefault();mv(ev)}},{passive:false});
+ const up=()=>{if(!on||!e.isConnected)return;on=0;const t=L[cur].lock;
+  if(Math.hypot(lx-t[0],(ly-t[1])*.5625)<9){e.style.left=t[0]+'%';e.style.top=t[1]+'%';finish()}else{say('Ahí no. ¿Dónde va una llave?');e.style.animation=''}};
+ window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up)}
 function keypad(){let v='';const draw=()=>{$('dsp').textContent=v.padEnd(3,'·')};
  card('<div class="disp" id="dsp">···</div><div class="grid3">'+[1,2,3,4,5,6,7,8,9].map(n=>'<button data-n="'+n+'">'+n+'</button>').join('')+'</div>');
  $('card').querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation();if(v.length<3)v+=b.dataset.n;draw();if(v.length===3){if(v==='259'){$('card').classList.remove('on');finish()}else{$('dsp').classList.add('shake');v='';setTimeout(()=>{draw();$('dsp').classList.remove('shake')},350);say('Código incorrecto. Busca la brújula.')}}})}
 function finish(){if(done)return;done=true;state.screen='levels';const f=!state.done.includes(cur);if(f){state.done.push(cur);state.coins+=10}save();coins();$('winReward').textContent=f?'+10 focos':'Misión completada';$('winText').textContent=L[cur].win;setTimeout(()=>$('winModal').classList.add('show'),600)}
-function hint(){if(done)return;if(state.coins<25)return toast('Necesitas 25 focos');state.coins-=25;save();coins();const l=L[cur];let t,m;
+function hint(){if(done)return;if(state.coins<25)return noCoins();state.coins-=25;save();coins();const l=L[cur];let t,m;
  if(cur===2){t=!flags.map?'map':!flags.cal?'cal':'lock';m=!flags.map?'Empieza por el mapa de la mesa.':!flags.cal?'Los números están en la pared.':'Ahora el candado del cofre.'}
  else if(l.lock){t=flags.key?'door':'src';m=l.h[flags.key?1:0]}else{t='src';m=l.h[0]}
  document.querySelectorAll('.hot').forEach(b=>b.classList.toggle('glow',t==='src'?b.dataset.g==='src':b.dataset.k===t));say(m)}
-async function ad(kind){try{if(!window.pgAds)return toast('Anuncios no disponibles');const a=await window.pgAds.requestOutOfPageAd(kind);const go=()=>a.show();a.state==='ready'?go():a.addEventListener('ready',go);if(kind==='rewarded')a.addEventListener('rewarded',()=>{state.coins+=25;save();coins();toast('¡+25 focos!')})}catch(e){toast('No hay anuncios disponibles')}}
-window.pgAdsCallbacks=window.pgAdsCallbacks||[];window.pgAdsCallbacks.push(async()=>{try{await window.pgAds.init()}catch(e){}});
+let lastAd=0;
+function vignette(){try{const e=document.createElement('script');e.dataset.zone='12200555';e.src='https://n6wxm.com/vignette.min.js';document.body.appendChild(e)}catch(x){}}
+function reward(){const t=Date.now();if(t-lastAd<25000)return toast('Espera un momento para otro anuncio');lastAd=t;toast('Cargando anuncio…');vignette();setTimeout(()=>{state.coins+=25;save();coins();toast('+25 focos')},6000)}
+async function ad(kind){kind==='interstitial'?vignette():reward()}
 function map(){const g=$('levelGrid');g.innerHTML='';L.forEach((l,i)=>{const b=document.createElement('button');b.className='level'+(state.done.includes(i)?' done':'');b.style.backgroundImage='url('+l.img+')';b.innerHTML='<span>'+(i+1)+'. '+l.n+'</span>';b.onclick=()=>go(i);g.appendChild(b)});$('mapCount').textContent=state.done.length+' de '+L.length+' completadas';coins()}
 function go(i){fs();start(i)}
 
@@ -69,20 +75,27 @@ function toggleMusic(){state.music=state.music===false;save();mlabel();music()}
 $('musicBtn').onclick=$('musicBtn2').onclick=toggleMusic;document.addEventListener('visibilitychange',()=>{if(document.hidden){if(ac)ac.suspend()}else music()});
 document.addEventListener('pointerdown',music,{once:true});mlabel();
 function fs(){try{const e=document.documentElement;if(document.fullscreenElement||document.webkitFullscreenElement)return;const p=(e.requestFullscreen||e.webkitRequestFullscreen||(()=>0)).call(e,{navigationUI:'hide'});Promise.resolve(p).then(()=>screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape')).catch(()=>{})}catch(e){}}
-document.addEventListener('pointerdown',fs,true);
+document.addEventListener('pointerdown',ev=>{if(!(ev.target.closest&&ev.target.closest('.item')))fs()},true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&$('game').classList.contains('active')&&!done)$('pauseModal').classList.add('show')});
+function noCoins(){$('coinsModal').classList.add('show')}
+$('coinsX').onclick=$('coinsClose').onclick=()=>$('coinsModal').classList.remove('show');$('coinsAd').onclick=()=>{$('coinsModal').classList.remove('show');ad('rewarded')};
+$('coinsModal').onclick=e=>{if(e.target.id==='coinsModal')$('coinsModal').classList.remove('show')};
 let n=0;
-$('hintBtn').onclick=hint;$('pauseBtn').onclick=()=>$('pauseModal').classList.add('show');$('giftBtn').onclick=$('focosBtn').onclick=()=>ad('rewarded');$('rewardAdBtn').onclick=()=>ad('rewarded');
-$('resumeBtn').onclick=()=>$('pauseModal').classList.remove('show');$('retryBtn').onclick=()=>{$('pauseModal').classList.remove('show');start(cur)};$('skipBtn').onclick=()=>{if(state.coins<75)return toast('Necesitas 75 focos');state.coins-=75;if(!state.done.includes(cur))state.done.push(cur);save();coins();$('pauseModal').classList.remove('show');done=true;$('winReward').textContent='-75 focos';$('winText').textContent='Misión saltada. Puedes volver a jugarla cuando quieras.';$('winModal').classList.add('show')};
+$('hintBtn').onclick=hint;$('pauseBtn').onclick=()=>$('pauseModal').classList.add('show');$('giftBtn').onclick=$('focosBtn').onclick=()=>ad('rewarded');
+$('resumeBtn').onclick=()=>$('pauseModal').classList.remove('show');$('retryBtn').onclick=()=>{$('pauseModal').classList.remove('show');start(cur)};$('skipBtn').onclick=()=>{if(state.coins<75){$('pauseModal').classList.remove('show');return noCoins()}state.coins-=75;if(!state.done.includes(cur))state.done.push(cur);save();coins();$('pauseModal').classList.remove('show');done=true;$('winReward').textContent='-75 focos';$('winText').textContent='Misión saltada. Puedes volver a jugarla cuando quieras.';$('winModal').classList.add('show')};
 $('exitBtn').onclick=()=>{$('pauseModal').classList.remove('show');map();show('levels')};
-$('nextBtn').onclick=async()=>{$('winModal').classList.remove('show');if(cur<L.length-1){if(++n%2===0)await ad('interstitial');start(cur+1)}else{map();show('levels')}};
+$('nextBtn').onclick=async()=>{$('winModal').classList.remove('show');if(cur<L.length-1){state.n=(state.n||0)+1;if(state.n>=(state.thr||2)){state.n=0;state.thr=[2,2,2,3][Math.floor(Math.random()*4)];vignette()}save();start(cur+1)}else{map();show('levels')}};
 $('mapBtn').onclick=()=>{$('winModal').classList.remove('show');map();show('levels')};
-$('playBtn').onclick=()=>{const i=L.findIndex((_,k)=>!state.done.includes(k));go(i<0?0:i)};$('levelsBtn').onclick=()=>{map();show('levels')};$('backHome').onclick=()=>show('home');
-let age=Number(state.age)||15;const setAge=v=>{age=Math.max(5,Math.min(99,+v));$('ageSlider').value=age;$('ageValue').textContent=age};setAge(age);
-$('ageSlider').oninput=e=>setAge(e.target.value);$('ageDown').onclick=()=>setAge(age-1);$('ageUp').onclick=()=>setAge(age+1);
-$('nextToNameBtn').onclick=()=>{state.age=age;save();show('onboarding-name')};$('backToAge').onclick=()=>show('onboarding-age');
-$('saveProfileBtn').onclick=()=>{const v=$('inputName').value.trim();if(!v)return toast('Escribe tu nombre');state.name=v;save();$('userGreeting').textContent='HOLA, '+v.toUpperCase();show('home')};
-if(state.name&&state.age){$('userGreeting').textContent='HOLA, '+state.name.toUpperCase();show('home')}else if(state.age)show('onboarding-name');
+$('backHome').onclick=()=>show('home');
+const hits=(box,l)=>l.forEach(([id,r,fn])=>{const b=document.createElement('button');b.className='hb';b.id=id;b.style.cssText=css(r);b.onclick=fn;$(box).appendChild(b)});
+let age=Number(state.age)||13;const setAge=v=>{age=Math.max(5,Math.min(99,v));$('ageNum').textContent=age};setAge(age);
+hits('ageHits',[['ageDown',R(355,365,580,560),()=>setAge(age-1)],['ageUp',R(1090,365,1320,560),()=>setAge(age+1)],['ageGo',R(470,635,1205,835),()=>{state.age=age;save();show('onboarding-name')}]]);
+hits('nameHits',[['nameGo',R(470,620,1205,810),()=>{const v=$('inputName').value.trim();if(!v)return toast('Escribe tu nombre');state.name=v;save();show('home')}]]);
+const stat=()=>{$('statText').textContent=state.done.length+' de '+L.length+' misiones completadas · '+state.coins+' focos';$('statModal').classList.add('show')};
+hits('homeHits',[['playBtn',R(1185,205,1620,355),()=>{const i=L.findIndex((_,k)=>!state.done.includes(k));go(i<0?0:i)}],['levelsBtn',R(1215,372,1600,490),()=>{map();show('levels')}],['trophyBtn',R(1240,505,1580,612),stat],['setBtn',R(1255,625,1570,730),()=>$('setModal').classList.add('show')],['quitBtn',R(1265,745,1565,855),()=>{try{window.close()}catch(e){}toast('Puedes cerrar la app desde tu teléfono')}],['homeGift',R(1405,20,1520,130),reward],['crownBtn',R(1540,20,1650,130),stat]]);
+$('setClose').onclick=()=>$('setModal').classList.remove('show');$('statClose').onclick=()=>$('statModal').classList.remove('show');
+$('renameBtn').onclick=()=>{$('setModal').classList.remove('show');$('inputName').value=state.name||'';show('onboarding-name')};
+if(state.name&&state.age)show('home');else if(state.age)show('onboarding-name');
 if(state.screen==='game'&&state.name&&L[state.cur]){start(state.cur);if(state.fl&&state.fl.c===state.cur){flags=state.fl.f||{};const o=L[cur].hot.find(x=>x.k==='keysrc');if(flags.key&&o)drag(reveal(KEY,o.at,9))}$('pauseModal').classList.add('show')}else if(state.screen==='levels'&&state.name){map();show('levels')}
 L.forEach(l=>{const i=new Image();i.src=l.img});coins();map();
 })();

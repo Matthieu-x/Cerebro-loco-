@@ -43,3 +43,17 @@ html,body{background:radial-gradient(80% 60% at 50% 115%,#ff9a3c55,transparent 6
 .btn.skip{background:#ffffff1f;border:3px solid #ffd9a0;color:#ffd9a0;box-shadow:0 4px 0 #0005;font-size:17px}
 
 html,body{overscroll-behavior:none;touch-action:manipulation}
+
+.stage{touch-action:none}
+
+.screen.art{padding:0}.art .stage{flex:none}.xpw{position:absolute;left:7.8%;top:4.5%;width:11.5%;height:6.2%;border-radius:999px;overflow:hidden}.xpw i{display:block;height:100%;width:0;background:linear-gradient(#ffd23c,#ff9a3c);transition:width .5s}
+.agenum{position:absolute;left:38.3%;top:42%;width:23.6%;height:14.9%;display:grid;place-items:center;font:800 8cqw/1 'Baloo 2';color:#fff;-webkit-text-stroke:.5cqw #1a0a50;paint-order:stroke fill;background:linear-gradient(#a24cf2,#7b25d9);border-radius:2cqw;pointer-events:none}
+#inputName{position:absolute;left:24.2%;top:40.9%;width:56%;height:16.5%;background:transparent;border:0;outline:0;color:#fff;font:800 6cqw 'Baloo 2';padding:0;user-select:text;-webkit-user-select:text}
+.nf{position:relative;width:min(560px,88vw);padding:7% 6% 6%;border-radius:28px;background:linear-gradient(#4aa2ff,#2757e0);border:5px solid #6cc4ff;box-shadow:0 0 0 4px #14225e,0 12px 40px #000a;text-align:center;color:#fff;font-family:'Baloo 2',sans-serif}
+.nft{margin:0 0 .3em 24%;font-weight:800;font-size:clamp(26px,5vw,42px);line-height:1.3;background:linear-gradient(#b04bff,#7a2ee8);border-radius:999px;padding:.05em .5em;-webkit-text-stroke:.07em #14225e;paint-order:stroke fill}
+.nf p{margin:.2em 0 .8em 24%;font-weight:800;font-size:clamp(18px,3.4vw,28px);line-height:1.15;-webkit-text-stroke:.07em #14225e;paint-order:stroke fill}.nf p b{color:#ffe61a;font-size:1.4em}
+.nfb1{position:absolute;left:-3%;top:-14%;width:30%;filter:drop-shadow(0 4px 0 #0005)}.nfx{position:absolute;right:-3%;top:-9%;width:13%;aspect-ratio:1;border-radius:50%;background:#e8262f;border:4px solid #fff;box-shadow:0 4px 0 #8a0f15;padding:8px}.nfx svg{width:100%;height:100%}
+.nfr{display:flex;gap:4%}.nfr button{flex:1;min-height:56px;font:800 clamp(18px,3.4vw,26px) 'Baloo 2';color:#fff;-webkit-text-stroke:.06em #14225e;paint-order:stroke fill;border-radius:999px;border:4px solid #14225e;display:flex;align-items:center;justify-content:center;gap:.3em;cursor:pointer}
+.nfr button:active{transform:translateY(3px)}.nb1{background:linear-gradient(#b04bff,#7a2ee8);box-shadow:0 5px 0 #3c1590}.nb2{background:linear-gradient(#8fff1a,#4fc400);box-shadow:0 5px 0 #2a7a00}.nb2 svg{width:1.1em;height:1.1em}
+.nfr button{font-family:'Baloo 2',Nunito,system-ui,sans-serif;white-space:nowrap;font-size:clamp(16px,3vw,24px)}.nf{padding:6% 6% 5%}.nf p{margin-bottom:.6em}.nft{margin-top:.2em}
+.nf{padding:30px 28px 26px}
