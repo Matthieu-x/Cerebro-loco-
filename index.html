@@ -11,15 +11,26 @@
 <body>
 
 <main class="app">
-<!-- REGISTRO -->
-<section class="screen active" id="onboarding">
+<!-- PASO 1: REGISTRO DE EDAD -->
+<section class="screen active" id="onboarding-age">
   <div class="brand">
     <h1 class="title-elegant">CEREBRO<br><span>LOCO</span></h1>
-    <p class="subtitle">Ingresa tus datos para comenzar la misión.</p>
+    <p class="subtitle">Para empezar, ¿cuántos años tienes?</p>
   </div>
   <div class="register-box">
     <label>¿Cuál es tu edad?</label>
     <input type="number" id="inputAge" placeholder="Ej. 15" min="5" max="99" required>
+    <button class="primary" id="nextToNameBtn" style="margin-top:15px;">SIGUIENTE ➜</button>
+  </div>
+</section>
+
+<!-- PASO 2: REGISTRO DE NOMBRE -->
+<section class="screen" id="onboarding-name">
+  <div class="brand">
+    <h1 class="title-elegant">CEREBRO<br><span>LOCO</span></h1>
+    <p class="subtitle">Y por último, ¿cómo te llamas?</p>
+  </div>
+  <div class="register-box">
     <label>¿Cómo te llamas?</label>
     <input type="text" id="inputName" placeholder="Tu nombre" required>
     <button class="primary" id="saveProfileBtn" style="margin-top:15px;">COMENZAR ➜</button>
@@ -51,7 +62,6 @@
 <section class="screen" id="game">
   <div class="top game-top"><button class="iconbtn" id="backLevels">←</button><div class="pill" id="levelLabel">NIVEL 1</div><div class="pill"><b id="coinsGame">0</b> FOCOS</div></div>
   
-  <!-- AQUÍ VA EL CANVAS DEL JUEGO -->
   <div class="canvas-container">
     <canvas id="gameCanvas"></canvas>
   </div>
@@ -59,7 +69,6 @@
   <div class="question" id="question">Cargando...</div>
   <div class="hintline" id="hintline"></div>
   
-  <!-- RESPUESTAS DE TEXTO (solo para preguntas de opción múltiple) -->
   <div class="play-area" id="playArea"></div>
   
   <div class="feedback" id="feedback"></div>
