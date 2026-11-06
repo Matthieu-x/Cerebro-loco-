@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#1a1245"><title>Cerebro Loco Remaster</title>
-<link rel="stylesheet" href="./game.css?v=9"><link rel="manifest" href="./app.webmanifest">
+<link rel="stylesheet" href="./game.css?v=10"><link rel="manifest" href="./app.webmanifest">
 <script src="https://playgama.com/ads/v0.3.js?clid=p_8cd46aa6-cc31-4149-bb34-5f754a653358"></script></head><body>
 <main class="app">
 <section class="screen active" id="onboarding-age"><div class="panel"><div class="logo">🧠 Cerebro <b>Loco</b></div><h1>¿Qué edad tiene tu mente?</h1>
@@ -9,10 +9,10 @@
 <input id="ageSlider" type="range" min="5" max="99" value="15"><button class="btn" id="nextToNameBtn">Continuar →</button></div></section>
 <section class="screen" id="onboarding-name"><div class="panel"><div class="logo">🧠 Cerebro <b>Loco</b></div><h1>¿Cómo te llamamos, genio?</h1>
 <input type="text" id="inputName" maxlength="20" placeholder="Tu nombre"><button class="btn" id="saveProfileBtn">¡A jugar! →</button><button class="link" id="backToAge">← Cambiar edad</button></div></section>
-<section class="screen" id="home"><div class="homebox"><div class="homeleft"><div class="top"><span class="chip" id="userGreeting">HOLA</span><span class="chip">💡 <b id="coinsHome">0</b></span></div>
-<div class="logo big">🧠 Cerebro <b>Loco</b></div><p class="sub">Encuentra objetos, resuelve códigos y escapa de cada habitación.</p>
-<button class="btn" id="playBtn">▶ Jugar</button><button class="btn alt" id="levelsBtn">Misiones</button><button class="btn ghost" id="rewardAdBtn">🎁 Ver anuncio · +25 focos</button></div>
-<div class="homeart"></div></div></section>
+<section class="screen" id="home"><div class="homec"><div class="top"><span class="chip" id="userGreeting">HOLA</span><span class="chip">💡 <b id="coinsHome">0</b></span></div>
+<div class="brain">🧠</div><div class="logo big">Cerebro <b>Loco</b></div><p class="sub">Encuentra objetos, resuelve códigos y escapa de cada habitación.</p>
+<div class="row"><button class="btn big" id="playBtn">▶ Jugar</button><button class="btn alt big" id="levelsBtn">Misiones</button></div>
+<div class="row"><button class="btn ghost" id="rewardAdBtn">🎁 Anuncio · +25 focos</button><button class="btn ghost" id="musicBtn">🎵 Música</button></div></div></section>
 <section class="screen" id="levels"><div class="top"><button class="rb" id="backHome">←</button><span class="chip">💡 <b id="coinsLevels">0</b></span></div>
 <h2>Misiones</h2><p class="sub" id="mapCount"></p><div class="level-grid" id="levelGrid"></div></section>
 <section class="screen" id="game"><div class="stage" id="stage"><img id="bg" alt="" draggable="false">
@@ -22,5 +22,5 @@
 <div class="rotate"><b>Gira tu dispositivo</b><span>Se juega en horizontal.</span></div>
 <div class="modal" id="winModal"><div class="mcard"><div class="trophy">★</div><h2>¡Mente brillante!</h2><b id="winReward">+10 focos</b><p id="winText"></p>
 <button class="btn" id="nextBtn">Siguiente →</button><button class="btn alt" id="mapBtn">Misiones</button></div></div>
-<div class="modal" id="pauseModal"><div class="mcard"><h2>Pausa</h2><button class="btn" id="resumeBtn">Continuar</button><button class="btn alt" id="retryBtn">Reiniciar misión</button><button class="btn ghost" id="exitBtn">Salir al mapa</button></div></div>
-<div class="toast" id="toast"></div><script src="./game.js?v=9" defer></script></body></html>
+<div class="modal" id="pauseModal"><div class="mcard"><h2>Pausa</h2><button class="btn" id="resumeBtn">Continuar</button><button class="btn alt" id="retryBtn">Reiniciar misión</button><button class="btn ghost" id="musicBtn2">🎵 Música</button><button class="btn ghost" id="exitBtn">Salir al mapa</button></div></div>
+<div class="toast" id="toast"></div><script src="./game.js?v=10" defer></script></body></html>
