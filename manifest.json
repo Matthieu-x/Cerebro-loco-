@@ -1,13 +1,15 @@
 {
   "game": "cerebro-loco",
-  "contentVersion": 2,
-  "minimumEngineVersion": 2,
+  "contentVersion": 3,
+  "minimumEngineVersion": 3,
   "updatedAt": "2026-11-05",
   "levelsFile": "levels-v2.json",
   "changelog": [
-    "Nuevo diseño gráfico en Canvas: Milo cobra vida.",
-    "Minijuegos (luces y secuencias) ahora son interactivos en el Canvas.",
-    "Niveles mucho más difíciles y desafiantes.",
-    "Sistema de actualización de motor (anti-caché) implementado."
+    "Rediseño visual completo de Cerebro Loco.",
+    "Nuevo Milo animado dibujado en Canvas.",
+    "Registro de edad con selector visual sin teclado.",
+    "Pantalla de actualización centrada y rediseñada.",
+    "Se añadió la mecánica interactiva de ordenar números.",
+    "Mejoras de adaptación móvil y escalado del Canvas."
   ]
 }
