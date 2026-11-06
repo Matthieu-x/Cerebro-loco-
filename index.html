@@ -4,16 +4,16 @@
 <link rel="stylesheet" href="./game.css?v=10"><link rel="manifest" href="./app.webmanifest">
 <script src="https://playgama.com/ads/v0.3.js?clid=p_8cd46aa6-cc31-4149-bb34-5f754a653358"></script></head><body>
 <main class="app">
-<section class="screen active" id="onboarding-age"><div class="panel"><div class="logo">🧠 Cerebro <b>Loco</b></div><h1>¿Qué edad tiene tu mente?</h1>
-<div class="age"><button class="rb" id="ageDown">−</button><div><strong id="ageValue">15</strong><small>AÑOS</small></div><button class="rb" id="ageUp">+</button></div>
+<section class="screen active" id="onboarding-age"><div class="panel"><div class="logo">Cerebro <b>Loco</b></div><h1>¿Qué edad tiene tu mente?</h1>
+<div class="age"><button class="rb" id="ageDown" aria-label="Menos">−</button><div><strong id="ageValue">15</strong><small>AÑOS</small></div><button class="rb" id="ageUp">+</button></div>
 <input id="ageSlider" type="range" min="5" max="99" value="15"><button class="btn" id="nextToNameBtn">Continuar →</button></div></section>
-<section class="screen" id="onboarding-name"><div class="panel"><div class="logo">🧠 Cerebro <b>Loco</b></div><h1>¿Cómo te llamamos, genio?</h1>
+<section class="screen" id="onboarding-name"><div class="panel"><div class="logo">Cerebro <b>Loco</b></div><h1>¿Cómo te llamamos, genio?</h1>
 <input type="text" id="inputName" maxlength="20" placeholder="Tu nombre"><button class="btn" id="saveProfileBtn">¡A jugar! →</button><button class="link" id="backToAge">← Cambiar edad</button></div></section>
-<section class="screen" id="home"><div class="homec"><div class="top"><span class="chip" id="userGreeting">HOLA</span><span class="chip">💡 <b id="coinsHome">0</b></span></div>
-<div class="brain">🧠</div><div class="logo big">Cerebro <b>Loco</b></div><p class="sub">Encuentra objetos, resuelve códigos y escapa de cada habitación.</p>
-<div class="row"><button class="btn big" id="playBtn">▶ Jugar</button><button class="btn alt big" id="levelsBtn">Misiones</button></div>
-<div class="row"><button class="btn ghost" id="rewardAdBtn">🎁 Anuncio · +25 focos</button><button class="btn ghost" id="musicBtn">🎵 Música</button></div></div></section>
-<section class="screen" id="levels"><div class="top"><button class="rb" id="backHome">←</button><span class="chip">💡 <b id="coinsLevels">0</b></span></div>
+<section class="screen" id="home"><div class="top htop"><span class="chip" id="userGreeting">HOLA</span><span class="chip">💡 <b id="coinsHome">0</b></span></div>
+<div class="homec"><div class="logo big">Cerebro <b>Loco</b></div><div class="tag">REMASTER</div><p class="sub">Encuentra objetos, resuelve códigos y escapa de cada habitación.</p>
+<div class="row"><button class="btn big" id="playBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>Jugar</button><button class="btn alt big" id="levelsBtn">Misiones</button></div>
+<div class="row"><button class="btn ghost" id="rewardAdBtn"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="11" rx="2" fill="#2f6bff" stroke="#6cc4ff" stroke-width="1.5"/><rect x="10.5" y="10" width="3" height="11" fill="#ffd23c"/><rect x="2" y="6.5" width="20" height="4" rx="1.5" fill="#4a8bff" stroke="#6cc4ff" stroke-width="1.5"/><path d="M12 6.5C9 1 5 4 8 6.5zM12 6.5c3-5.500 7-2.500 4 0z" fill="#ffd23c"/></svg>+25 focos</button><button class="btn ghost" id="musicBtn"></button></div></div></section>
+<section class="screen" id="levels"><div class="top"><button class="back" id="backHome"><svg class="ic" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Volver</button><span class="chip">💡 <b id="coinsLevels">0</b></span></div>
 <h2>Misiones</h2><p class="sub" id="mapCount"></p><div class="level-grid" id="levelGrid"></div></section>
 <section class="screen" id="game"><div class="stage" id="stage"><img id="bg" alt="" draggable="false">
 <i class="cn" id="coinNum">50</i><div id="hots"></div><button class="hb" id="pauseBtn" aria-label="Pausa"></button><button class="hb" id="hintBtn" aria-label="Pista"></button>
@@ -22,5 +22,5 @@
 <div class="rotate"><b>Gira tu dispositivo</b><span>Se juega en horizontal.</span></div>
 <div class="modal" id="winModal"><div class="mcard"><div class="trophy">★</div><h2>¡Mente brillante!</h2><b id="winReward">+10 focos</b><p id="winText"></p>
 <button class="btn" id="nextBtn">Siguiente →</button><button class="btn alt" id="mapBtn">Misiones</button></div></div>
-<div class="modal" id="pauseModal"><div class="mcard"><h2>Pausa</h2><button class="btn" id="resumeBtn">Continuar</button><button class="btn alt" id="retryBtn">Reiniciar misión</button><button class="btn ghost" id="musicBtn2">🎵 Música</button><button class="btn ghost" id="exitBtn">Salir al mapa</button></div></div>
+<div class="modal" id="pauseModal"><div class="mcard"><h2>Pausa</h2><button class="btn" id="resumeBtn">Continuar</button><button class="btn alt" id="retryBtn">Reiniciar misión</button><button class="btn ghost" id="musicBtn2"></button><button class="btn skip" id="skipBtn">Saltar misión · 75 focos</button><button class="btn ghost" id="exitBtn">Salir al mapa</button></div></div>
 <div class="toast" id="toast"></div><script src="./game.js?v=10" defer></script></body></html>

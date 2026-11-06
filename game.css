@@ -33,3 +33,11 @@ input[type=text]{width:100%;font:700 20px 'Baloo 2';padding:.6em 1em;border-radi
 .row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}.btn.big{font-size:clamp(20px,3.4vh,28px);min-width:min(220px,40vw)}
 .mcard{gap:14px;padding:26px 30px;width:min(360px,86vw)}.mcard .btn{width:100%;min-height:56px;font-size:20px;padding:.5em 1em;white-space:nowrap}.mcard .btn.ghost{background:#ffffff26;border:3px solid #ffffff66;color:#fff;box-shadow:0 4px 0 #0005}
 .homeart{display:none}
+html,body{background:radial-gradient(80% 60% at 50% 115%,#ff9a3c55,transparent 65%),linear-gradient(#1b3a9a,#0f2166 55%,#0a1440)}
+.app:before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle,#ffe9a8 0 2px,transparent 3px) 12% 30%/180px 160px,radial-gradient(circle,#9fd8ff 0 1.5px,transparent 3px) 60% 70%/230px 190px;opacity:.5;animation:dr 12s linear infinite}@keyframes dr{to{background-position:12% 130%,60% 170%}}
+.ic{width:1.15em;height:1.15em;margin-right:.4em;vertical-align:-.2em;flex:none}.btn,.chip,.back{display:inline-flex;align-items:center;justify-content:center}.chip .ic{margin-right:.3em}
+.htop{position:absolute;top:3vh;left:4vw;right:4vw;width:auto}.homec{position:static;gap:1.2vh}.homec:before{display:none}
+.logo.big{font-size:clamp(40px,8vh,72px);letter-spacing:1px;text-shadow:0 4px 0 #0a1440}.tag{font:800 clamp(12px,2vh,16px)/1 'Baloo 2';letter-spacing:.5em;color:#6cc4ff;margin:-.2em 0 .6em .5em}
+.back{gap:.2em;font:800 clamp(15px,2.2vh,19px) 'Baloo 2';color:#fff;background:#0f2a6b;border:3px solid #6cc4ff;border-radius:14px;padding:.45em 1.1em .45em .7em;box-shadow:0 4px 0 #071a45;cursor:pointer}.back:active{transform:translateY(3px)}.back .ic{margin:0 .2em 0 0}
+.panel{background:linear-gradient(#1f48aa,#12307f);border:4px solid #6cc4ff;box-shadow:0 8px 0 #071a45,0 0 40px #2f6bff55;backdrop-filter:none}.panel .logo{color:#cfe8ff}.age strong{color:#fff;text-shadow:0 3px 0 #071a45}input[type=text]{background:#eaf4ff;border-color:#ffb457}
+.btn.skip{background:#ffffff1f;border:3px solid #ffd9a0;color:#ffd9a0;box-shadow:0 4px 0 #0005;font-size:17px}

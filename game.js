@@ -9,7 +9,7 @@ const HAT='<svg viewBox="0 0 80 50"><ellipse cx="40" cy="38" rx="38" ry="9" fill
 const T=(r,s)=>({r,s});
 const L=[
 {img:'scene-01.webp',n:'Encuentra el teléfono oculto',coin:P(1360,60),win:'¡Estaba debajo de los libros!',h:['Mira donde algo pesado tapa algo pequeño.'],
- hot:[T(R(440,590,720,720),'Shhh… el gato duerme 😴'),T(R(730,570,915,695),'Solo un cojín con un gato.'),T(R(1180,385,1525,590),'La tele está apagada.'),T(R(1000,380,1150,600),'Nada bajo la lámpara.'),T(R(800,735,905,825),'Una taza vacía.'),T(R(925,620,1100,760),'Solo tierra y hojas.'),{r:R(1060,750,1225,815),k:'found',svg:PHONE,at:P(1140,770),w:4}]},
+ hot:[T(R(440,590,720,720),'Shhh… el gato duerme'),T(R(730,570,915,695),'Solo un cojín con un gato.'),T(R(1180,385,1525,590),'La tele está apagada.'),T(R(1000,380,1150,600),'Nada bajo la lámpara.'),T(R(800,735,905,825),'Una taza vacía.'),T(R(925,620,1100,760),'Solo tierra y hojas.'),{r:R(1060,750,1225,815),k:'found',svg:PHONE,at:P(1140,770),w:4}]},
 {img:'scene-02.webp',n:'Encuentra la llave',coin:P(1338,58),lock:P(1378,525),lockMsg:'Arrastra la llave hasta la cerradura.',win:'¡Puerta abierta con la llave del bolsillo!',h:['Revisa la ropa colgada.','Arrastra la llave a la cerradura.'],
  hot:[T(R(435,610,690,720),'El gato no la tiene.'),T(R(1500,478,1660,620),'El pez te mira… sin pistas.'),T(R(1485,175,1655,440),'Un cuadro bonito. Nada más.'),T(R(870,600,1100,830),'Solo una planta.'),T(R(740,240,935,490),'Un póster de videojuegos.'),{r:R(1175,150,1440,820),k:'door'},{r:R(945,310,1085,540),k:'keysrc',at:P(1015,540)}]},
 {img:'scene-03.webp',n:'Encuentra el código del cofre',coin:P(1320,62),win:'¡Cofre abierto! Brújula + calendario = 259.',h:[],
@@ -38,8 +38,8 @@ function tap(o){if(done)return;const k=o.k,l=L[cur];
  if(!k)return say(o.s);
  if(k==='found'){if(o.svg)reveal(o.svg,o.at,o.w);return finish()}
  if(k==='keysrc'){if(flags.key)return say('Ya sacaste la llave.');flags.key=1;const e=reveal(KEY,o.at,9);drag(e);return say('¡Encontraste una llave! Arrástrala a su lugar.')}
- if(k==='door')return say(flags.key?l.lockMsg:'Está cerrado con llave 🔒');
- if(k==='map'){flags.map=1;return card('<div class="paper">🧭 Brújula del mapa<br>Norte · Centro · Sureste</div><small>Toca para cerrar</small>')}
+ if(k==='door')return say(flags.key?l.lockMsg:'Está cerrado con llave');
+ if(k==='map'){flags.map=1;return card('<div class="paper">Brújula del mapa<br>Norte · Centro · Sureste</div><small>Toca para cerrar</small>')}
  if(k==='cal'){flags.cal=1;return card('<div class="grid3">'+[1,2,3,4,5,6,7,8,9].map(n=>'<b>'+n+'</b>').join('')+'</div><small>Toca para cerrar</small>')}
  if(k==='lock')return keypad()}
 function reveal(svg,p,w){const e=document.createElement('div');e.className='item';e.style.cssText=`left:${p[0]}%;top:${p[1]}%;width:${w}%`;e.innerHTML=svg;$('hots').appendChild(e);return e}
@@ -64,13 +64,14 @@ function tone(f,t,d,ty,v){const o=ac.createOscillator(),g=ac.createGain();o.type
 function sched(){while(nx<ac.currentTime+.3){const c=CH[(stp>>3)%4],i=stp%8;tone(c[PT[i]]*(i%4==3?2:1),nx,.5,'triangle',.35);if(i===0){tone(c[0]/2,nx,2.4,'sine',.6);tone(c[2],nx,2.4,'sine',.15)}nx+=.34;stp++}}
 function music(){if(state.music===false){if(mt){clearInterval(mt);mt=0}if(ac)ac.suspend();return}
  try{if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.gain.value=.12;mg.connect(ac.destination)}ac.resume();if(!mt){nx=ac.currentTime+.1;mt=setInterval(sched,100)}}catch(e){}}
-function mlabel(){const t=state.music===false?'🔇 Música: no':'🎵 Música: sí';$('musicBtn').textContent=t;$('musicBtn2').textContent=t}
+function mlabel(){const t=state.music===false?`<svg class="ic" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="3" fill="currentColor"/><circle cx="17.5" cy="16" r="3" fill="currentColor"/><path d="M3 3l18 18" stroke="#ff7a7a" stroke-width="2.6" stroke-linecap="round"/></svg> Música: no`:`<svg class="ic" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="3" fill="currentColor"/><circle cx="17.5" cy="16" r="3" fill="currentColor"/></svg> Música: sí`;$('musicBtn').innerHTML=t;$('musicBtn2').innerHTML=t}
 function toggleMusic(){state.music=state.music===false;save();mlabel();music()}
 $('musicBtn').onclick=$('musicBtn2').onclick=toggleMusic;document.addEventListener('visibilitychange',()=>{if(document.hidden){if(ac)ac.suspend()}else music()});
 document.addEventListener('pointerdown',music,{once:true});mlabel();
 let n=0;
 $('hintBtn').onclick=hint;$('pauseBtn').onclick=()=>$('pauseModal').classList.add('show');$('giftBtn').onclick=$('focosBtn').onclick=()=>ad('rewarded');$('rewardAdBtn').onclick=()=>ad('rewarded');
-$('resumeBtn').onclick=()=>$('pauseModal').classList.remove('show');$('retryBtn').onclick=()=>{$('pauseModal').classList.remove('show');start(cur)};$('exitBtn').onclick=()=>{$('pauseModal').classList.remove('show');map();show('levels')};
+$('resumeBtn').onclick=()=>$('pauseModal').classList.remove('show');$('retryBtn').onclick=()=>{$('pauseModal').classList.remove('show');start(cur)};$('skipBtn').onclick=()=>{if(state.coins<75)return toast('Necesitas 75 focos');state.coins-=75;if(!state.done.includes(cur))state.done.push(cur);save();coins();$('pauseModal').classList.remove('show');done=true;$('winReward').textContent='-75 focos';$('winText').textContent='Misión saltada. Puedes volver a jugarla cuando quieras.';$('winModal').classList.add('show')};
+$('exitBtn').onclick=()=>{$('pauseModal').classList.remove('show');map();show('levels')};
 $('nextBtn').onclick=async()=>{$('winModal').classList.remove('show');if(cur<L.length-1){if(++n%2===0)await ad('interstitial');start(cur+1)}else{map();show('levels')}};
 $('mapBtn').onclick=()=>{$('winModal').classList.remove('show');map();show('levels')};
 $('playBtn').onclick=()=>{const i=L.findIndex((_,k)=>!state.done.includes(k));go(i<0?0:i)};$('levelsBtn').onclick=()=>{map();show('levels')};$('backHome').onclick=()=>show('home');
