@@ -209,21 +209,18 @@ let pendingContentManifest=null;
 async function readJson(url){ const r = await fetch(url,{cache:'no-store'}); if(!r.ok) throw new Error(); return r.json(); }
 function validLevels(d){ return Array.isArray(d)&&d.length>0&&d.every(x=>x&&typeof x.q==='string'&&typeof x.type==='string'); }
 
-// LÓGICA DE ACTUALIZACIÓN CON CONTROL DE MOTOR
 async function loadGameContent(){
  let cached=null, localVersion=0;
  try{ cached=JSON.parse(localStorage.getItem(CONTENT_KEY)||'null'); localVersion=Number(localStorage.getItem(CONTENT_VERSION_KEY)||0); }catch(e){}
  try{
   const m=await readJson(new URL('./manifest.json',document.baseURI).href);
   
-  // Si el manifiesto requiere un motor más nuevo que el que está cargado...
   if (m.minimumEngineVersion && m.minimumEngineVersion > ENGINE_VERSION) {
       toast('Actualizando motor...');
-      // Forzamos una recarga añadiendo un parámetro a la URL para romper la caché
       setTimeout(() => {
           window.location.href = window.location.href.split('?')[0] + '?update=' + Date.now();
       }, 1500);
-      return cached; // Retornamos lo viejo mientras recarga
+      return cached; 
   }
 
   if(cached&&validLevels(cached)){ if(Number(m.contentVersion)>localVersion) pendingContentManifest=m; return cached; }
@@ -242,7 +239,6 @@ async function applyContentUpdate(){
   localStorage.setItem(CONTENT_KEY,JSON.stringify(fresh));
   localStorage.setItem(CONTENT_VERSION_KEY,String(m.contentVersion));
   
-  // SI EL MOTOR CAMBIÓ, FORZAMOS RECARGA DURA CON ROMPE-CACHÉ
   if (m.minimumEngineVersion && m.minimumEngineVersion > ENGINE_VERSION) {
       window.location.href = window.location.href.split('?')[0] + '?update=' + Date.now();
   } else {
@@ -263,20 +259,36 @@ function toast(msg){ $('toast').textContent=msg; $('toast').classList.add('show'
 function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id)); if(id==='game') setTimeout(resizeCanvas, 50); }
 function updateCoins(){ ['coinsHome','coinsLevels','coinsGame'].forEach(id=>$(id).textContent=state.coins); $('homeProgress').textContent=Math.min(state.unlocked,levels.length); $('homeStars').textContent=state.done.length; }
 
+// LÓGICA DE REGISTRO PASO A PASO
 if(state.name && state.age) {
-    $('onboarding').classList.remove('active'); $('home').classList.add('active');
+    $('onboarding-age').classList.remove('active');
+    $('onboarding-name').classList.remove('active');
+    $('home').classList.add('active');
     $('userGreeting').textContent = 'HOLA, ' + state.name.toUpperCase();
+} else if (state.age) {
+    $('onboarding-age').classList.remove('active');
+    $('onboarding-name').classList.add('active');
 } else {
-    $('onboarding').classList.add('active');
+    $('onboarding-age').classList.add('active');
 }
 
-$('saveProfileBtn').onclick = () => {
+$('nextToNameBtn').onclick = () => {
     const age = $('inputAge').value;
+    if(!age || age < 5 || age > 99) { alert("Por favor, ingresa una edad válida (entre 5 y 99)."); return; }
+    state.age = age;
+    $('onboarding-age').classList.remove('active');
+    $('onboarding-name').classList.add('active');
+    $('inputName').focus();
+};
+
+$('saveProfileBtn').onclick = () => {
     const name = $('inputName').value.trim();
-    if(!age || age < 5 || !name) { alert("Por favor, ingresa una edad válida y tu nombre."); return; }
-    state.age = age; state.name = name; save();
+    if(!name) { alert("Por favor, ingresa tu nombre."); return; }
+    state.name = name; 
+    save();
     $('userGreeting').textContent = 'HOLA, ' + name.toUpperCase();
-    $('onboarding').classList.remove('active'); $('home').classList.add('active');
+    $('onboarding-name').classList.remove('active'); 
+    $('home').classList.add('active');
 };
 
 function renderMap(){
