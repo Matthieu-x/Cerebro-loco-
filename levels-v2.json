@@ -1,0 +1,31 @@
+[
+  {
+    "q": "El teléfono quedó escondido. Encuéntralo en la habitación.",
+    "hint": "Busca cerca del sofá y del gato. El teléfono está entre los objetos de la escena.",
+    "type": "scene",
+    "scene": "scene1",
+    "target": "phone",
+    "action": "tap",
+    "explain": "Encontraste el teléfono. La pista estaba escondida a simple vista."
+  },
+  {
+    "q": "El cofre está cerrado. Encuentra la llave y arrástrala hasta el candado.",
+    "hint": "La llave está sobre el sofá. Arrástrala hasta el candado del cofre.",
+    "type": "scene",
+    "scene": "scene2",
+    "target": "lock",
+    "action": "drag",
+    "targetPoint": [0.92, 0.48],
+    "explain": "Abriste el cofre. Encontraste la llave y la llevaste al lugar correcto."
+  },
+  {
+    "q": "La puerta está cerrada. Busca la llave y llévala hasta la cerradura.",
+    "hint": "La llave está junto a los objetos de la mesa. Arrástrala hasta la cerradura de la puerta.",
+    "type": "scene",
+    "scene": "scene3",
+    "target": "door-lock",
+    "action": "drag",
+    "targetPoint": [0.92, 0.47],
+    "explain": "¡Puerta abierta! Resolviste el acertijo usando los objetos de la ilustración."
+  }
+]

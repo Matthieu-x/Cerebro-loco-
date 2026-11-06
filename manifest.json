@@ -1,15 +1,15 @@
 {
   "game": "cerebro-loco",
-  "contentVersion": 3,
-  "minimumEngineVersion": 3,
+  "contentVersion": 6,
+  "minimumEngineVersion": 4,
   "updatedAt": "2026-11-05",
   "levelsFile": "levels-v2.json",
   "changelog": [
-    "Rediseño visual completo de Cerebro Loco.",
-    "Nuevo Milo animado dibujado en Canvas.",
-    "Registro de edad con selector visual sin teclado.",
-    "Pantalla de actualización centrada y rediseñada.",
-    "Se añadió la mecánica interactiva de ordenar números.",
-    "Mejoras de adaptación móvil y escalado del Canvas."
+    "Interfaz rediseñada con una paleta cálida y formato vertical para móviles.",
+    "Tres escenas ilustradas reales integradas en el Canvas, no pegadas al menú.",
+    "Objetos interactivos: teléfono tocable y llaves que se arrastran hasta cerraduras.",
+    "Se conserva Playgama y el sistema de focos y anuncios recompensados.",
+    "Actualización de contenido con descarga sin caché y mensajes de error más claros.",
+    "Se elimina el registro de Service Worker externo y su caché obsoleta."
   ]
 }

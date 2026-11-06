@@ -1,18 +1,31 @@
-# Cerebro Loco — Rediseño v3
+# Cerebro Loco Remaster v6
 
-Juego web estático listo para GitHub Pages o Vercel.
+Build vertical para móviles con tres escenas ilustradas e interacción táctil.
 
-## Archivos
-- `index.html`: pantallas y estructura.
-- `game.css`: nueva identidad visual adaptable a móvil.
-- `game.js`: motor Canvas, Milo, controles, niveles, progreso y actualizaciones.
-- `levels-v2.json`: contenido de desafíos.
-- `manifest.json`: versión del contenido.
-- `sw.js`, `vercel.json`, `manifest.json`: soporte de despliegue y PWA.
+## Contenido
+- `index.html`: interfaz y estructura de pantallas.
+- `game.css`: rediseño visual cálido y responsive.
+- `game.js`: Canvas, animación de objetos, detección táctil, arrastre, progreso y anuncios Playgama.
+- `scene-01.webp` a `scene-03.webp`: fondos ilustrados de las escenas.
+- `levels-v2.json`: definición de los tres acertijos.
+- `manifest.json`: versión de contenido y changelog.
 
-## Publicar en Vercel
-Importa el repositorio en Vercel con Framework Preset `Other`. No necesita comando de build ni directorio de salida especial; deja el directorio raíz como salida.
+## Interacciones
+1. Escena 1: tocar el teléfono ilustrado.
+2. Escena 2: arrastrar la llave hasta el candado del cofre.
+3. Escena 3: arrastrar la llave hasta la cerradura de la puerta.
 
-## Notas
-El selector de edad no abre el teclado. El jugador puede usar los botones +/− o deslizar el control.
-La escena del juego y Milo se dibujan en Canvas. La actualización de contenido se muestra como modal centrado.
+## Actualización de contenido
+El juego consulta `manifest.json` y `levels-v2.json` con `cache: no-store` y un parámetro anti-caché. Si detecta una versión nueva, permite descargarla desde el diálogo de actualización. Vercel debe publicar todos los archivos del ZIP en el mismo directorio.
+
+## Anuncios
+Se conserva el SDK de Playgama original y los anuncios interstitial/recompensados. Su disponibilidad real depende de la configuración y publicación del juego en Playgama.
+
+## Service Worker
+No se incluye `sw.js` ni se registra un Service Worker externo. Al iniciar, el juego intenta retirar un Service Worker antiguo del mismo origen para evitar que entregue archivos desactualizados.
+
+## Pruebas realizadas
+- Sintaxis JavaScript (`node --check`).
+- JSON válido para niveles y manifiesto.
+- Integridad del ZIP y presencia de los tres recursos WebP.
+- No se ha probado en BlueStacks ni en el entorno de producción de Playgama.

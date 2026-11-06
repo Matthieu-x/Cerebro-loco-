@@ -3,10 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101525">
-<title>Cerebro Loco — Desafíos mentales</title>
+<meta name="theme-color" content="#f4e6cb">
+<meta name="description" content="Cerebro Loco: acertijos visuales ilustrados e interactivos."><title>Cerebro Loco Remaster</title>
+
 <link rel="stylesheet" href="./game.css">
 <script src="https://playgama.com/ads/v0.3.js?clid=p_8cd46aa6-cc31-4149-bb34-5f754a653358"></script>
+
 </head>
 <body>
 <main class="app">
@@ -41,13 +43,13 @@
 </section>
 <section class="screen" id="game">
  <div class="top game-top"><button class="iconbtn" id="backLevels">←</button><div class="pill" id="levelLabel">RETO 01</div><div class="pill coin-pill"><span class="coin-dot">✦</span><b id="coinsGame">0</b></div></div>
- <div class="canvas-container"><canvas id="gameCanvas"></canvas></div>
+ <div class="canvas-container scene-stage"><canvas id="gameCanvas" aria-label="Escena interactiva del acertijo"></canvas><div class="scene-tip" id="sceneTip">Toca los objetos para investigar. Arrastra los que encuentres.</div></div>
  <div class="question" id="question">Cargando desafío…</div><div class="hintline" id="hintline"></div><div class="play-area" id="playArea"></div><div class="feedback" id="feedback" aria-live="polite"></div>
  <div class="hud"><button class="tool-btn" id="hintBtn"><span class="tool-icon">?</span><span class="tool-copy"><b>PISTA</b><small>Ayuda</small></span><strong>25</strong></button><button class="tool-btn" id="skipBtn"><span class="tool-icon">»</span><span class="tool-copy"><b>SALTAR</b><small>Continuar</small></span><strong>75</strong></button></div>
 </section>
 </main>
-<div class="modal" id="winModal"><div class="modal-card"><div class="win-kicker">DESAFÍO SUPERADO</div><div class="trophy">✦</div><h2>¡Mente brillante!</h2><div class="win-reward"><b id="winReward">+10 focos</b></div><p id="winText">Has superado el desafío.</p><div class="modal-actions"><button class="primary" id="nextBtn">SIGUIENTE RETO <span>→</span></button><button class="secondary" id="mapBtn">VOLVER AL MAPA</button></div></div></div>
-<div class="modal update-modal" id="contentUpdateModal"><div class="modal-card update-card"><div class="update-symbol">↻</div><div class="update-kicker">NUEVO CONTENIDO</div><h2>Tu juego acaba de crecer</h2><p id="updateVersion"></p><ul id="updateChangelog"></ul><div class="modal-actions"><button class="primary" id="applyContentUpdate">ACTUALIZAR AHORA <span>→</span></button><button class="text-button" id="laterContentUpdate">LO HARÉ DESPUÉS</button></div></div></div>
+<div class="modal" id="winModal"><div class="modal-card"><div class="win-kicker">DESAFÍO SUPERADO</div><div class="trophy">★</div><h2>¡Mente brillante!</h2><div class="win-reward"><b id="winReward">+10 focos</b></div><p id="winText">Has superado el desafío.</p><div class="modal-actions"><button class="primary" id="nextBtn">SIGUIENTE RETO <span>→</span></button><button class="secondary" id="mapBtn">VOLVER AL MAPA</button></div></div></div>
+<div class="modal update-modal" id="contentUpdateModal"><div class="modal-card update-card"><div class="update-symbol">✦</div><div class="update-kicker">NUEVO CONTENIDO</div><h2>Tu juego acaba de crecer</h2><p id="updateVersion"></p><ul id="updateChangelog"></ul><div class="modal-actions"><button class="primary" id="applyContentUpdate">ACTUALIZAR AHORA <span>→</span></button><button class="text-button" id="laterContentUpdate">LO HARÉ DESPUÉS</button></div></div></div>
 <div class="toast" id="toast"></div>
-<script src="./game.js" defer></script>
+<script src="./game.js?v=6" defer></script>
 </body></html>
