@@ -1,11 +1,13 @@
 {
   "game": "cerebro-loco",
-  "contentVersion": 1,
-  "minimumEngineVersion": 1,
-  "updatedAt": "2026-11-04",
-  "levelsFile": "levels-v1.json",
+  "contentVersion": 2,
+  "minimumEngineVersion": 2,
+  "updatedAt": "2026-11-05",
+  "levelsFile": "levels-v2.json",
   "changelog": [
-    "Versión inicial con 30 niveles de Cerebro Loco.",
-    "Contenido separado del motor para permitir actualizaciones sin reinstalar la APK."
+    "Nuevo diseño gráfico en Canvas: Milo cobra vida.",
+    "Minijuegos (luces y secuencias) ahora son interactivos en el Canvas.",
+    "Niveles mucho más difíciles y desafiantes.",
+    "Sistema de actualización de motor (anti-caché) implementado."
   ]
 }
