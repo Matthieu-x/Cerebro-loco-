@@ -1,15 +1,17 @@
 {
   "game": "cerebro-loco",
-  "contentVersion": 6,
-  "minimumEngineVersion": 4,
+  "contentVersion": 7,
+  "minimumEngineVersion": 5,
   "updatedAt": "2026-11-05",
   "levelsFile": "levels-v2.json",
   "changelog": [
-    "Interfaz rediseñada con una paleta cálida y formato vertical para móviles.",
-    "Tres escenas ilustradas reales integradas en el Canvas, no pegadas al menú.",
-    "Objetos interactivos: teléfono tocable y llaves que se arrastran hasta cerraduras.",
-    "Se conserva Playgama y el sistema de focos y anuncios recompensados.",
-    "Actualización de contenido con descarga sin caché y mensajes de error más claros.",
-    "Se elimina el registro de Service Worker externo y su caché obsoleta."
-  ]
+    "Diseño horizontal 16:9 para pantallas móviles y emuladores.",
+    "Escenas a pantalla completa: ilustración completa con fondo ambiental, sin recortar personajes.",
+    "Animaciones ambientales, movimiento sutil de cámara, destellos y objetos con movimiento independiente.",
+    "Menús de edad, nombre y selección de niveles rediseñados.",
+    "Centro visible de actualizaciones con comprobación de manifiesto y errores detallados.",
+    "Precarga de las tres escenas WebP para reducir las esperas al entrar a un nivel.",
+    "Se conserva Playgama y los anuncios recompensados."
+  ],
+  "orientation": "landscape"
 }

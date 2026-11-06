@@ -2,7 +2,7 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const canvas=$('gameCanvas'),ctx=canvas.getContext('2d'),homeCanvas=$('homeCanvas'),hctx=homeCanvas.getContext('2d');
-const ENGINE_VERSION=4, CONTENT_KEY='cerebroLoco_content_v3', CONTENT_VERSION_KEY='cerebroLoco_contentVersion_v3', SAVE_KEY='cerebroLocoSave_v2';
+const ENGINE_VERSION=5, APP_VERSION='7.0', CONTENT_KEY='cerebroLoco_content_v3', CONTENT_VERSION_KEY='cerebroLoco_contentVersion_v3', SAVE_KEY='cerebroLocoSave_v2';
 let levels=[],current=0,finished=false,frame=0,mascotMood='idle',toastTimer=null,pendingManifest=null,sceneSolved=false,dragging=false,dragPos=null,adsCounter=0;
 let state={unlocked:1,coins:120,done:[],hints:[],name:'',age:0};
 try{state={...state,...JSON.parse(localStorage.getItem(SAVE_KEY)||'{}')}}catch(e){}
@@ -101,17 +101,49 @@ function drawMilo(c,x,y,s,mood,t){
  c.save();c.translate(x,y+Math.sin(t*.04)*3);c.scale(s,s);
  ellipse(c,0,45,37,8,'#8c7a60');rr(c,-30,-25,60,70,22,'#5b9c91','#386d68');
  circ(c,0,-36,31,'#edbd8b','#a66f50');c.beginPath();c.moveTo(-28,-43);c.quadraticCurveTo(-22,-78,2,-65);c.quadraticCurveTo(28,-76,29,-42);c.fillStyle='#6d594b';c.fill();
- circ(c,-10,-36,4,'#283c3b');circ(c,10,-36,4,'#283c3b');ellipse(c,0,-23,8,4,'#a65c55');rr(c,-24,31,19,11,5,'#e4a75c');rr(c,5,31,19,11,5,'#e4a75c');c.restore();
+ const blink=(t%210)>202;if(blink){line(c,-15,-36,-6,-36,'#283c3b',2.5);line(c,6,-36,15,-36,'#283c3b',2.5)}else{ellipse(c,-10,-36,3.4,4.6,'#283c3b');ellipse(c,10,-36,3.4,4.6,'#283c3b')}
+ ellipse(c,0,-23,8,4,'#a65c55');rr(c,-24,31,19,11,5,'#e4a75c');rr(c,5,31,19,11,5,'#e4a75c');c.restore();
 }
+function sceneImageRect(W,H,file){
+ const im=sceneImages[file];if(!im||!im.naturalWidth)return{x:0,y:0,w:W,h:H};
+ const scale=Math.min(W/im.width,H/im.height),w=im.width*scale,h=im.height*scale;
+ return{x:(W-w)/2,y:(H-h)/2,w,h};
+}
+function scenePoint(norm,W,H,file){const r=sceneImageRect(W,H,file);return{x:r.x+norm[0]*r.w,y:r.y+norm[1]*r.h}}
 function drawIllustratedScene(c,W,H,file,item){
- if(!sceneImages[file]){sceneImages[file]=new Image();sceneImages[file].src='./'+file}
- const im=sceneImages[file];c.fillStyle='#273e43';c.fillRect(0,0,W,H);
- if(im.complete&&im.naturalWidth){const scale=Math.max(W/im.width,H/im.height),dw=im.width*scale,dh=im.height*scale;c.drawImage(im,(W-dw)/2,(H-dh)/2,dw,dh)}
- const level=levels[current],scene=scenes[level.scene],pos=dragPos||{x:scene.itemStart[0]*W,y:scene.itemStart[1]*H};
- if(item==='phone'){c.save();c.translate(scene.target[0]*W,scene.target[1]*H+Math.sin(frame*.08)*2);c.rotate(-.14);c.shadowColor='#111a20aa';c.shadowBlur=12;rr(c,-13,-24,26,48,6,'#263943','#111d24');rr(c,-9,-19,18,37,3,'#a8e4e4','#4d8790');rr(c,-6,-15,12,28,2,'#f8f1df');circ(c,0,17,2,'#35515a');c.restore()}
- if(item==='key'){c.save();c.translate(pos.x,pos.y+Math.sin(frame*.08)*2);c.rotate(-.35);c.shadowColor='#f4c65c';c.shadowBlur=15;c.strokeStyle='#ffd66f';c.lineWidth=7;c.lineCap='round';c.beginPath();c.arc(-8,0,9,0,Math.PI*2);c.moveTo(1,0);c.lineTo(31,0);c.lineTo(31,8);c.moveTo(20,0);c.lineTo(20,7);c.stroke();c.shadowBlur=0;c.strokeStyle='#fff1b9';c.lineWidth=2;c.beginPath();c.arc(-8,0,5,0,Math.PI*2);c.stroke();c.restore()}
+ if(!sceneImages[file]){sceneImages[file]=new Image();sceneImages[file].decoding='async';sceneImages[file].src='./'+file+'?v=7'}
+ const im=sceneImages[file];c.fillStyle='#233a43';c.fillRect(0,0,W,H);
+ if(im.complete&&im.naturalWidth){
+  const cover=Math.max(W/im.width,H/im.height),bw=im.width*cover,bh=im.height*cover;
+  c.save();c.filter='blur(22px) saturate(.82) brightness(.62)';c.drawImage(im,(W-bw)/2,(H-bh)/2,bw,bh);c.restore();
+  const r=sceneImageRect(W,H,file),sway=Math.sin(frame*.012)*1.5,zoom=1+Math.sin(frame*.009)*.002;
+  c.save();c.translate(W/2+sway,H/2);c.scale(zoom,zoom);c.drawImage(im,-r.w/2,-r.h/2,r.w,r.h);c.restore();
+ }else{
+  c.fillStyle='#fff4e5';c.font='700 18px Nunito';c.textAlign='center';c.fillText('Preparando ilustración…',W/2,H/2);
+ }
+ // Polvo luminoso y pequeños destellos para dar vida a la escena sin tapar la ilustración.
+ for(let i=0;i<13;i++){
+  const px=((i*83+frame*(.12+(i%3)*.035))%(W+30))-15,py=(H*.12+(i*47+Math.sin(frame*.025+i)*13)%(H*.78));
+  c.globalAlpha=.12+((Math.sin(frame*.035+i)+1)*.11);circ(c,px,py,1.2+(i%3)*.45,'#fff0b9');
+ }
+ c.globalAlpha=1;
+ const level=levels[current],scene=scenes[level.scene],pos=dragPos||scenePoint(scene.itemStart,W,H,file);
+ if(item==='phone'){
+  c.save();const p=scenePoint(scene.target,W,H,file);c.translate(p.x,p.y+Math.sin(frame*.08)*3);c.rotate(-.14+Math.sin(frame*.025)*.025);c.shadowColor='#111a20aa';c.shadowBlur=15+Math.sin(frame*.06)*4;rr(c,-13,-24,26,48,6,'#263943','#111d24');rr(c,-9,-19,18,37,3,'#a8e4e4','#4d8790');rr(c,-6,-15,12,28,2,'#f8f1df');circ(c,0,17,2,'#35515a');c.restore();
+ }
+ if(item==='key'){
+  c.save();c.translate(pos.x,pos.y+Math.sin(frame*.08)*3);c.rotate(-.35+Math.sin(frame*.02)*.035);c.shadowColor='#f4c65c';c.shadowBlur=15+Math.sin(frame*.07)*5;c.strokeStyle='#ffd66f';c.lineWidth=7;c.lineCap='round';c.beginPath();c.arc(-8,0,9,0,Math.PI*2);c.moveTo(1,0);c.lineTo(31,0);c.lineTo(31,8);c.moveTo(20,0);c.lineTo(20,7);c.stroke();c.shadowBlur=0;c.strokeStyle='#fff1b9';c.lineWidth=2;c.beginPath();c.arc(-8,0,5,0,Math.PI*2);c.stroke();c.restore();
+ }
  if(dragging&&item==='key'){c.save();c.strokeStyle='#fff4c8';c.lineWidth=2;c.setLineDash([5,5]);c.beginPath();c.arc(pos.x,pos.y,24+Math.sin(frame*.12)*3,0,Math.PI*2);c.stroke();c.restore()}
 }
+async function preloadSceneImages(){
+ const files=['scene-01.webp','scene-02.webp','scene-03.webp'];
+ await Promise.allSettled(files.map(file=>new Promise(resolve=>{
+  const im=new Image();im.decoding='async';im.onload=()=>{sceneImages[file]=im;resolve()};im.onerror=resolve;im.src='./'+file+'?v=7';
+  if(im.complete&&im.naturalWidth){sceneImages[file]=im;resolve()}
+ })));
+}
+
 function drawGame(){const [W,H]=fit(canvas,ctx);ctx.clearRect(0,0,W,H);const level=levels[current];if(level&&scenes[level.scene])scenes[level.scene].draw(ctx,W,H)}
 function drawHome(){const [W,H]=fit(homeCanvas,hctx);hctx.clearRect(0,0,W,H);const g=hctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#f8e9cf');g.addColorStop(1,'#e8d5b6');hctx.fillStyle=g;hctx.fillRect(0,0,W,H);for(let i=0;i<9;i++)circ(hctx,(i*79+25)%W,30+(i%3)*43,3,'#d2b98d');drawMilo(hctx,W*.48,H*.62,1.1,'happy',frame)}
 function loop(){frame++;if($('game').classList.contains('active'))drawGame();if($('home').classList.contains('active'))drawHome();requestAnimationFrame(loop)}
@@ -135,30 +167,45 @@ async function loadContent(){
  }catch(e){if(cached&&validLevels(cached)){toast('Sin conexión: se cargó la última versión guardada.');return cached}throw e}
 }
 async function applyUpdate(){
- const b=$('applyContentUpdate');b.disabled=true;b.textContent='DESCARGANDO…';
+ const cameFromUpdates=$('updates').classList.contains('active');
+ const b=$('applyContentUpdate'),install=$('installUpdateBtn');b.disabled=true;install.disabled=true;b.textContent='DESCARGANDO…';install.textContent='DESCARGANDO…';
  try{
   const m=await fetchJSON('./manifest.json');if(m.minimumEngineVersion>ENGINE_VERSION)throw Error('Los archivos de la aplicación también necesitan actualizarse.');const fresh=await fetchJSON('./'+m.levelsFile);
   if(!validLevels(fresh))throw Error('Contenido inválido');
   localStorage.setItem(CONTENT_KEY,JSON.stringify(fresh));localStorage.setItem(CONTENT_VERSION_KEY,String(m.contentVersion));
-  pendingManifest=null;levels=fresh;renderMap();$('contentUpdateModal').classList.remove('show');toast('Juego actualizado correctamente.');start(Math.min(current,levels.length-1));
- }catch(e){b.disabled=false;b.textContent='INTENTAR DE NUEVO';toast('No se pudo actualizar. Revisa la conexión o vuelve a intentarlo.')}
+  pendingManifest=null;levels=fresh;renderMap();$('contentUpdateModal').classList.remove('show');toast('Contenido actualizado correctamente.');$('updateStatus').textContent='Actualización instalada correctamente. Versión '+m.contentVersion+'.';$('installUpdateBtn').hidden=true;if(cameFromUpdates){show('updates')}else{start(Math.min(current,levels.length-1))}
+ }catch(e){b.disabled=false;install.disabled=false;b.textContent='INTENTAR DE NUEVO';install.textContent='INTENTAR DE NUEVO';$('updateStatus').textContent='Falló la descarga: '+(e.message||'error de conexión')+'. Comprueba que el hosting publique el manifiesto y el JSON.';toast('No se pudo actualizar. Revisa el servidor.')}
 }
-function renderMap(){const grid=$('levelGrid');grid.innerHTML='';levels.forEach((l,i)=>{const b=document.createElement('button');b.className='level'+(state.done.includes(i)?' done':'');b.textContent=state.done.includes(i)?'✓':String(i+1).padStart(2,'0');b.setAttribute('aria-label','Escena '+(i+1));b.onclick=()=>start(i);grid.appendChild(b)});$('mapProgress').style.width=(state.done.length/levels.length*100)+'%';updateCoins()}
+async function checkForUpdates(){
+ const b=$('checkUpdatesBtn'),status=$('updateStatus');b.disabled=true;b.textContent='BUSCANDO…';status.textContent='Conectando con el servidor de contenido…';
+ try{
+  const m=await fetchJSON('./manifest.json');
+  if(!m||!Number.isFinite(Number(m.contentVersion)))throw Error('El manifiesto recibido no es válido.');
+  $('installedVersion').textContent='v'+APP_VERSION;
+  if(Number(m.minimumEngineVersion)>ENGINE_VERSION){status.textContent='Hay una actualización del motor. Debes publicar el ZIP nuevo en tu hosting para instalarla.';$('installUpdateBtn').hidden=true;return}
+  const remote=await fetchJSON('./'+m.levelsFile);if(!validLevels(remote))throw Error('El archivo de niveles no es válido.');
+  const local=Number(localStorage.getItem(CONTENT_VERSION_KEY)||0);
+  if(Number(m.contentVersion)>local){pendingManifest=m;$('updateVersion').textContent='Versión de contenido '+m.contentVersion;$('updateChangelog').innerHTML='';(m.changelog||[]).forEach(t=>{const li=document.createElement('li');li.textContent=t;$('updateChangelog').appendChild(li)});$('installUpdateBtn').hidden=false;status.textContent='Hay contenido nuevo disponible. Pulsa descargar actualización.';}
+  else{$('installUpdateBtn').hidden=true;status.textContent='Tu contenido está actualizado. Versión '+m.contentVersion+'.'}
+ }catch(e){status.textContent='No se pudo comprobar: '+(e.message||'error de conexión')+'. Verifica que manifest.json y levels-v2.json estén publicados junto al juego.'}
+ finally{b.disabled=false;b.textContent='COMPROBAR ACTUALIZACIONES ↻'}
+}
+function renderMap(){const grid=$('levelGrid');grid.innerHTML='';levels.forEach((l,i)=>{const b=document.createElement('button'),num=document.createElement('span'),desc=document.createElement('small');b.className='level'+(state.done.includes(i)?' done':'');num.textContent=state.done.includes(i)?'✓':'0'+(i+1);desc.textContent=l.q;b.append(num,desc);b.setAttribute('aria-label','Escena '+(i+1)+': '+l.q);b.onclick=()=>start(i);grid.appendChild(b)});$('mapProgress').style.width=(state.done.length/levels.length*100)+'%';$('mapCount').textContent=state.done.length+' de '+levels.length+' escenas completadas';updateCoins()}
 function start(i){
  current=i;finished=false;sceneSolved=false;dragging=false;dragPos=null;mascotMood='idle';const l=levels[i];show('game');$('levelLabel').textContent='ESCENA '+String(i+1).padStart(2,'0')+' / '+levels.length;$('question').textContent=l.q;$('hintline').textContent='';$('feedback').textContent='';$('playArea').innerHTML='';$('sceneTip').textContent=l.action==='drag'?'Arrastra la llave hasta la cerradura.':'Toca el teléfono que está oculto en la escena.';updateCoins();drawGame();
 }
 function win(){if(finished)return;finished=true;mascotMood='happy';const first=!state.done.includes(current);if(first){state.done.push(current);state.coins+=10}state.unlocked=Math.max(state.unlocked,Math.min(levels.length,current+2));save();updateCoins();$('winReward').textContent=first?'+10 focos':'ESCENA COMPLETADA';$('winText').textContent=levels[current].explain+' Tu progreso quedó guardado.';$('winModal').classList.add('show')}
 function fail(){if(finished)return;$('feedback').textContent='Todavía no. Observa bien la escena.';if(navigator.vibrate)navigator.vibrate(35)}
-function hitTarget(x,y){const r=canvas.getBoundingClientRect(),nx=x/r.width,ny=y/r.height,l=levels[current],scene=scenes[l.scene];if(l.action==='drag')return false;const [tx,ty]=scene.target;return Math.hypot(nx-tx,ny-ty)<.105}
+function hitTarget(x,y){const r=canvas.getBoundingClientRect(),l=levels[current],scene=scenes[l.scene],file='scene-0'+(current+1)+'.webp',p=scenePoint(scene.target,r.width,r.height,file);if(l.action==='drag')return false;return Math.hypot(x-p.x,y-p.y)<Math.min(r.width,r.height)*.12}
 canvas.addEventListener('pointerdown',e=>{
  if(finished)return;const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,l=levels[current],scene=scenes[l.scene];
- if(l.action==='drag'){const start=scene.itemStart,ix=start[0]*r.width,iy=start[1]*r.height;if(Math.hypot(x-ix,y-iy)>Math.max(34,r.width*.11)){fail();return}dragging=true;dragPos={x,y};canvas.setPointerCapture(e.pointerId);drawGame();return}
+ if(l.action==='drag'){const start=scenePoint(scene.itemStart,r.width,r.height,'scene-0'+(current+1)+'.webp'),ix=start.x,iy=start.y;if(Math.hypot(x-ix,y-iy)>Math.max(34,Math.min(r.width,r.height)*.13)){fail();return}dragging=true;dragPos={x,y};canvas.setPointerCapture(e.pointerId);drawGame();return}
  if(hitTarget(x,y)){win()}else fail();
 });
 canvas.addEventListener('pointermove',e=>{if(!dragging)return;const r=canvas.getBoundingClientRect();dragPos={x:e.clientX-r.left,y:e.clientY-r.top};drawGame()});
 canvas.addEventListener('pointerup',e=>{
- if(!dragging)return;dragging=false;const r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;dragPos=null;
- const target=levels[current].targetPoint||scenes[levels[current].scene].target;const near=Math.hypot(x-target[0],y-target[1])<.20;if(near)win();else{fail();drawGame()}
+ if(!dragging)return;dragging=false;const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;dragPos=null;
+ const scene=scenes[levels[current].scene],target=scenePoint(levels[current].targetPoint||scene.target,r.width,r.height,'scene-0'+(current+1)+'.webp');const near=Math.hypot(x-target.x,y-target.y)<Math.min(r.width,r.height)*.22;if(near)win();else{fail();drawGame()}
 });
 function setupProfile(){
  let age=Number(state.age)||15;$('ageSlider').value=age;$('ageValue').textContent=age;
@@ -178,9 +225,11 @@ $('skipBtn').onclick=()=>{if(finished)return;if(state.coins<75){toast('Necesitas
 $('nextBtn').onclick=async()=>{$('winModal').classList.remove('show');if(current<levels.length-1){adsCounter++;if(adsCounter%3===0)await mostrarInterstitial();start(current+1)}else{renderMap();show('levels')}};
 $('rewardAdBtn').onclick=async()=>{const b=$('rewardAdBtn');b.disabled=true;b.textContent='CARGANDO…';await mostrarRecompensado();setTimeout(()=>{b.disabled=false;b.textContent='✦ Ver anuncio · +25 focos'},2200)};
 $('mapBtn').onclick=()=>{$('winModal').classList.remove('show');renderMap();show('levels')};
-$('applyContentUpdate').onclick=applyUpdate;$('laterContentUpdate').onclick=()=>$('contentUpdateModal').classList.remove('show');
+$('applyContentUpdate').onclick=applyUpdate;$('laterContentUpdate').onclick=()=>$('contentUpdateModal').classList.remove('show');$('updatesBtn').onclick=()=>{show('updates');checkForUpdates()};$('backUpdates').onclick=()=>show('home');$('checkUpdatesBtn').onclick=checkForUpdates;$('installUpdateBtn').onclick=applyUpdate;
 async function removeOldWorker(){try{if('serviceWorker'in navigator){const regs=await navigator.serviceWorker.getRegistrations();await Promise.all(regs.filter(r=>new URL(r.active?.scriptURL||r.installing?.scriptURL||r.waiting?.scriptURL||location.href).origin===location.origin).map(r=>r.unregister()))}}catch(e){}}
 await removeOldWorker();
+$('installedVersion').textContent='v'+APP_VERSION;
+await preloadSceneImages();
 try{levels=await loadContent()}catch(e){levels=[];toast('No se pudo cargar el contenido. Comprueba que el juego esté publicado correctamente.')}
 if(!validLevels(levels)){levels=[{q:'Encuentra el interruptor de la habitación.',hint:'Está en la pared, junto a la lámpara.',type:'scene',scene:'room',target:'switch',explain:'Encendiste la habitación.'}]}
 setupProfile();updateCoins();renderMap();

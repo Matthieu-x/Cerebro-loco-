@@ -1,0 +1,10 @@
+{
+  "name": "Cerebro Loco Remaster",
+  "short_name": "Cerebro Loco",
+  "lang": "es",
+  "start_url": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#17212b",
+  "theme_color": "#17212b"
+}
